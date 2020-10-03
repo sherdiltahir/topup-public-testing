@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/numeric_pad.dart';
@@ -8,12 +9,16 @@ import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class ReEnterPin extends StatefulWidget {
+  final User user;
+
+  const ReEnterPin({Key key, this.user}) : super(key: key);
   @override
   _ReEnterPinState createState() => _ReEnterPinState();
 }
 
 class _ReEnterPinState extends State<ReEnterPin> {
   String pin= "";
+  String error='';
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +105,44 @@ class _ReEnterPinState extends State<ReEnterPin> {
                   print(pin);
                 });
               },
+            ),
+            SizedBox(
+              height: 4 * SizeConfig.heightMultiplier,
+            ),
+            Text(error,style: TextStyle(color: Colors.red)),
+            SizedBox(
+              height: 4 * SizeConfig.heightMultiplier,
+            ),
+            MaterialButton(
+              padding: EdgeInsets.symmetric(
+                  vertical: 1.5 * SizeConfig.heightMultiplier,
+                  horizontal: 30 * SizeConfig.widthMultiplier),
+              color: themeColor,
+              elevation: 4.0,
+              onPressed: () {
+                setState(() {
+                  if(pin.length!=6)
+                    setState(() {
+                      error='Please enter complete digits';
+                    });
+                  else if(pin!=widget.user.securityPin)
+                    error='The pins Do not match';
+                  else{
+                    widget.user.securityPin=pin;
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => ReEnterPin(user:widget.user)));
+                  }
+                });
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
+              child: Text(
+                "Continue",
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 2.1 * SizeConfig.textMultiplier,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
 
           ],
