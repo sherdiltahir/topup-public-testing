@@ -7,13 +7,12 @@ import 'package:topup/utils/numeric_pad.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
-class CreatePin extends StatefulWidget {
+class ReEnterPin extends StatefulWidget {
   @override
-  _CreatePinState createState() => _CreatePinState();
+  _ReEnterPinState createState() => _ReEnterPinState();
 }
 
-class _CreatePinState extends State<CreatePin> {
-
+class _ReEnterPinState extends State<ReEnterPin> {
   String pin= "";
 
   @override
@@ -45,7 +44,7 @@ class _CreatePinState extends State<CreatePin> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                Strings.set_pin_String,
+                Strings.reenter_pin_String,
                 style: GoogleFonts.poppins(
                     color: darkGreyColor,
                     fontWeight: FontWeight.w400,
@@ -72,13 +71,12 @@ class _CreatePinState extends State<CreatePin> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                pin.length>0? buildFilledCircles():buildCircles(),
-                pin.length>1? buildFilledCircles():buildCircles(),
-                pin.length>2? buildFilledCircles():buildCircles(),
-                pin.length>3? buildFilledCircles():buildCircles(),
-                pin.length>4? buildFilledCircles():buildCircles(),
-                pin.length>5? buildFilledCircles():buildCircles(),
-
+                buildCircles(),
+                buildCircles(),
+                buildCircles(),
+                buildCircles(),
+                buildCircles(),
+                buildCircles(),
               ],
             ),
 
@@ -91,7 +89,7 @@ class _CreatePinState extends State<CreatePin> {
                 print(value);
                 setState(() {
                   if(value != -1){
-                    if(pin.length < 6){
+                    if(pin.length < 4){
                       pin = pin + value.toString();
                     }
                   }
@@ -119,27 +117,6 @@ Widget buildCircles() {
       child: Container(
         decoration: BoxDecoration(
           color: lightGreyColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(25),
-          ),
-          boxShadow: <BoxShadow>[
-
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-Widget buildFilledCircles() {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 1 * SizeConfig.widthMultiplier),
-    child: SizedBox(
-      width: 4 * SizeConfig.widthMultiplier,
-      height: 2 * SizeConfig.heightMultiplier,
-      child: Container(
-        decoration: BoxDecoration(
-          color: darkGreyColor,
           borderRadius: BorderRadius.all(
             Radius.circular(25),
           ),

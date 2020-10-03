@@ -11,14 +11,14 @@ NumericPad({@required this.onNumberSelected});
 @override
 Widget build(BuildContext context) {
   return Container(
-    color: Color(0xFFF5F4F9),
+    color: Colors.white,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
 
         Container(
-          height: MediaQuery.of(context).size.height * 0.11,
+          height: 9*SizeConfig.heightMultiplier,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,7 @@ Widget build(BuildContext context) {
         ),
 
         Container(
-          height: MediaQuery.of(context).size.height * 0.11,
+          height: 9*SizeConfig.heightMultiplier,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +44,7 @@ Widget build(BuildContext context) {
         ),
 
         Container(
-          height: MediaQuery.of(context).size.height * 0.11,
+          height: 9*SizeConfig.heightMultiplier,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +57,7 @@ Widget build(BuildContext context) {
         ),
 
         Container(
-          height: MediaQuery.of(context).size.height * 0.11,
+          height: 9*SizeConfig.heightMultiplier,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,19 +81,18 @@ Widget buildNumber(int number) {
         onNumberSelected(number);
       },
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(1*SizeConfig.widthMultiplier),
         child: Container(
           decoration: BoxDecoration(
+            shape: BoxShape.circle,
             color: themeColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+
           ),
           child: Center(
             child: Text(
               number.toString(),
               style: TextStyle(
-                fontSize: 2*SizeConfig.textMultiplier,
+                fontSize: 2.5*SizeConfig.textMultiplier,
                 fontWeight: FontWeight.bold,
                 color: darkGreyColor,
               ),
@@ -112,13 +111,11 @@ Widget buildBackspace() {
         onNumberSelected(-1);
       },
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(1*SizeConfig.widthMultiplier),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
+           shape:BoxShape.circle
           ),
           child: Center(
             child: Icon(
