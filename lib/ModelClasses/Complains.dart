@@ -8,4 +8,5 @@ class Complains{
   String complainId;
   String complainType;
   String status;
+  DateTime lastUpdateTime;
 }

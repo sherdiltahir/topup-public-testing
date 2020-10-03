@@ -8,4 +8,7 @@ class CouponSharing{
   String sentBy;
   String sentTo;
   String transactionId;
+
+
+
 }
