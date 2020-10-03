@@ -17,8 +17,8 @@ class _SplashState extends State<Splash> {
   void MoveToOnboarding() {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(
-        builder:(context)=>Register()
-    ));
+        builder:(context)=>Register(
+    )));
   }
 
   @override

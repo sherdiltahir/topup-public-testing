@@ -8,7 +8,6 @@ import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class VerifyPhone extends StatefulWidget {
-
   final String phoneNumber;
 
   VerifyPhone({@required this.phoneNumber});
@@ -18,7 +17,6 @@ class VerifyPhone extends StatefulWidget {
 }
 
 class _VerifyPhoneState extends State<VerifyPhone> {
-
   String code = "123456";
 
   @override
@@ -29,16 +27,13 @@ class _VerifyPhoneState extends State<VerifyPhone> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: GestureDetector(
-          onTap: (){
-
-          },
+          onTap: () {},
           child: Icon(
             Icons.arrow_back_ios,
             color: darkGreyColor,
             size: 4 * SizeConfig.imageSizeMultiplier,
           ),
         ),
-
         title: Text(
           "Mobile Number Verification",
           style: GoogleFonts.poppins(
@@ -86,13 +81,18 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
 
-                  buildCodeNumberBox(code.length > 0 ? code.substring(0, 1) : ""),
-                  buildCodeNumberBox(code.length > 1 ? code.substring(1, 2) : ""),
-                  buildCodeNumberBox(code.length > 2 ? code.substring(2, 3) : ""),
-                  buildCodeNumberBox(code.length > 3 ? code.substring(3, 4) : ""),
-                  buildCodeNumberBox(code.length > 4 ? code.substring(4, 5) : ""),
-                  buildCodeNumberBox(code.length > 5 ? code.substring(5, 6) : ""),
-
+                  buildCodeNumberBox(
+                      code.length > 0 ? code.substring(0, 1) : ""),
+                  buildCodeNumberBox(
+                      code.length > 1 ? code.substring(1, 2) : ""),
+                  buildCodeNumberBox(
+                      code.length > 2 ? code.substring(2, 3) : ""),
+                  buildCodeNumberBox(
+                      code.length > 3 ? code.substring(3, 4) : ""),
+                  buildCodeNumberBox(
+                      code.length > 4 ? code.substring(4, 5) : ""),
+                  buildCodeNumberBox(
+                      code.length > 5 ? code.substring(5, 6) : ""),
                 ],
               ),
             ),
@@ -127,10 +127,9 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             Align(
               alignment: Alignment.center,
               child: GestureDetector(
-                onTap: (){
-                  Navigator.push(context,MaterialPageRoute(
-                      builder:(context)=>CreatePin()
-                  ));
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CreatePin()));
                 },
                 child: Text(
                   Strings.need_help_String,
@@ -141,7 +140,6 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 ),
               ),
             ),
-
           ],
         ),
       ),
@@ -150,10 +148,10 @@ class _VerifyPhoneState extends State<VerifyPhone> {
 
   Widget buildCodeNumberBox(String codeNumber) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 1*SizeConfig.widthMultiplier),
+      padding: EdgeInsets.symmetric(horizontal: 1 * SizeConfig.widthMultiplier),
       child: SizedBox(
-        width: 10*SizeConfig.widthMultiplier,
-        height: 5*SizeConfig.heightMultiplier,
+        width: 10 * SizeConfig.widthMultiplier,
+        height: 5 * SizeConfig.heightMultiplier,
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -165,15 +163,14 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   color: Colors.black26,
                   blurRadius: 8.0,
                   spreadRadius: 0.5,
-                  offset: Offset(0.0, 0.75)
-              )
+                  offset: Offset(0.0, 0.75))
             ],
           ),
           child: Center(
             child: Text(
               codeNumber,
               style: GoogleFonts.poppins(
-                fontSize: 1.8*SizeConfig.textMultiplier,
+                fontSize: 1.75 * SizeConfig.textMultiplier,
                 fontWeight: FontWeight.bold,
                 color: darkGreyColor,
               ),
