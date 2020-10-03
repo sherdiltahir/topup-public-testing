@@ -3,54 +3,32 @@ import 'package:topup/ModelClasses/UserModel.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String verificationId='';
+  String verificationId = '';
 
   // create user obj based on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
     return user != null ? User(id: user.uid) : null;
   }
 
-
   Future<String> currentUserIdFromAuth() async {
     final FirebaseUser user = await _auth.currentUser();
-    if (user!=null) {
+    if (user != null) {
       final String uid = user.uid;
-      if (uid.isNotEmpty)
-        return uid;
-     }
+      if (uid.isNotEmpty) return uid;
+    }
     return "";
-
   }
 
   // auth change user stream
   Stream<User> get user {
-    return _auth.onAuthStateChanged
-    .map(_userFromFirebaseUser);
+    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
-  // sign in anon
-
-
-
-
-
-  // sign in with email and password
-  Future signInWithEmailAndPassword(String email, String password) async {
-    try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      FirebaseUser user = result.user;
-      return user.uid;
-    } catch (error) {
-      print(error.toString());
-      return null;
-    }
-  }
-
-  Future<void> verifyPhone(String userPhoneNumber,Function goToNextScreen,Function smsSent,) async {
+  Future<void> verifyPhone(String userPhoneNumber, Function goToNextScreen,
+      Function smsUIUpdate, Function updateUser) async {
     final PhoneVerificationCompleted verified =
         (AuthCredential authResult) async {
-      _signInWithPhoneNumber(authResult);
+      _signInWithPhoneNumber(authResult, '', updateUser);
     };
 
     final PhoneVerificationFailed verificationFailed =
@@ -60,13 +38,12 @@ class AuthService {
 
     final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
       this.verificationId = verId;
-      setState(() {
-        this.codeSent = true;
-      });
+      smsUIUpdate(false);//False means that the the sms has just been sent wait for 50 seconds and start countdown
     };
 
     final PhoneCodeAutoRetrievalTimeout autoTimeout = (String varId) {
       this.verificationId = varId;
+      smsUIUpdate(true);//True means show the resend button
     };
 
     await FirebaseAuth.instance.verifyPhoneNumber(
@@ -78,32 +55,25 @@ class AuthService {
         codeAutoRetrievalTimeout: autoTimeout);
   }
 
-  Future<bool> _signInWithPhoneNumber(AuthCredential credential,String enteredCode) async {
-    if (credential == null)
-      if (enteredCode!=null)
-        credential = PhoneAuthProvider.getCredential(
-            verificationId: verificationId, smsCode: enteredCode);
-      else
-        return false;
-
+  Future<bool> _signInWithPhoneNumber(AuthCredential credential,
+      String enteredCode, Function updateUser) async {
+    if (credential == null) if (enteredCode != null)
+      credential = PhoneAuthProvider.getCredential(
+          verificationId: verificationId, smsCode: enteredCode);
+    else
+      return false;
 
     await FirebaseAuth.instance
         .signInWithCredential(credential)
         .then((value) async {
       if (value != null) {
-        widget.driver.id = value.user.uid;
-        isInfoOk = true;
+        updateUser(value.user.uid);
       }
     });
-    if (isInfoOk) {
-      await DatabaseService(widget.driver.id)
-          .updateDriverData(currentUser: widget.driver);
-      gotoSignUp();
-    }
-    isInfoOk=false;
+    return true;
   }
 
-  // sign out
+// sign out
   Future signOut() async {
     try {
       return await _auth.signOut();
@@ -112,5 +82,4 @@ class AuthService {
       return null;
     }
   }
-
 }
