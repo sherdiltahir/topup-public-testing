@@ -44,7 +44,7 @@ class _ReEnterPinState extends State<ReEnterPin> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                Strings.reenter_pin_String,
+                Strings.set_pin_String,
                 style: GoogleFonts.poppins(
                     color: darkGreyColor,
                     fontWeight: FontWeight.w400,
@@ -71,12 +71,13 @@ class _ReEnterPinState extends State<ReEnterPin> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildCircles(),
-                buildCircles(),
-                buildCircles(),
-                buildCircles(),
-                buildCircles(),
-                buildCircles(),
+                pin.length>0? buildFilledCircles():buildCircles(),
+                pin.length>1? buildFilledCircles():buildCircles(),
+                pin.length>2? buildFilledCircles():buildCircles(),
+                pin.length>3? buildFilledCircles():buildCircles(),
+                pin.length>4? buildFilledCircles():buildCircles(),
+                pin.length>5? buildFilledCircles():buildCircles(),
+
               ],
             ),
 
@@ -89,7 +90,7 @@ class _ReEnterPinState extends State<ReEnterPin> {
                 print(value);
                 setState(() {
                   if(value != -1){
-                    if(pin.length < 4){
+                    if(pin.length < 6){
                       pin = pin + value.toString();
                     }
                   }
@@ -117,6 +118,27 @@ Widget buildCircles() {
       child: Container(
         decoration: BoxDecoration(
           color: lightGreyColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(25),
+          ),
+          boxShadow: <BoxShadow>[
+
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget buildFilledCircles() {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 1 * SizeConfig.widthMultiplier),
+    child: SizedBox(
+      width: 4.2 * SizeConfig.widthMultiplier,
+      height: 2.2 * SizeConfig.heightMultiplier,
+      child: Container(
+        decoration: BoxDecoration(
+          color: darkGreyColor,
           borderRadius: BorderRadius.all(
             Radius.circular(25),
           ),

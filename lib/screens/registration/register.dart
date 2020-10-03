@@ -67,13 +67,13 @@ class _RegisterState extends State<Register> {
             Center(
               child: SvgPicture.asset(
                 mobile_Image,
-                height: 10 * SizeConfig.heightMultiplier,
-                width: 10 * SizeConfig.widthMultiplier,
+                height: 8.5 * SizeConfig.heightMultiplier,
+                width: 8.5 * SizeConfig.widthMultiplier,
                 color: themeColor,
               ),
             ),
             SizedBox(
-              height: 2.3 * SizeConfig.heightMultiplier,
+              height: 1.2 * SizeConfig.heightMultiplier,
             ),
             Center(
               child: Text(
@@ -85,7 +85,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
             SizedBox(
-              height: 1.5 * SizeConfig.heightMultiplier,
+              height: 1 * SizeConfig.heightMultiplier,
             ),
             Center(
               child: Text(
@@ -98,7 +98,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
             SizedBox(
-              height: 5 * SizeConfig.heightMultiplier,
+              height: 1.5 * SizeConfig.heightMultiplier,
             ),
             Center(
               child: Padding(
@@ -133,11 +133,11 @@ class _RegisterState extends State<Register> {
               ),
             ),
             SizedBox(
-              height: 6 * SizeConfig.heightMultiplier,
+              height: 1 * SizeConfig.heightMultiplier,
             ),
             MaterialButton(
               padding: EdgeInsets.symmetric(
-                  vertical: 1.5 * SizeConfig.heightMultiplier,
+                  vertical: 1.2 * SizeConfig.heightMultiplier,
                   horizontal: 30 * SizeConfig.widthMultiplier),
               color: themeColor,
               elevation: 4.0,
@@ -147,8 +147,8 @@ class _RegisterState extends State<Register> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            VerifyPhone()
-                        //CreatePin()
+                           // VerifyPhone()
+                        CreatePin()
                     ));
               },
               shape: RoundedRectangleBorder(
@@ -162,7 +162,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
             SizedBox(
-              height: 3 * SizeConfig.heightMultiplier,
+              height: 1 * SizeConfig.heightMultiplier,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
