@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
+import 'package:topup/Services/FirebaseAuthService.dart';
 import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
@@ -8,9 +10,9 @@ import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class VerifyPhone extends StatefulWidget {
-  final String phoneNumber;
+  final User user;
 
-  VerifyPhone({@required this.phoneNumber});
+  VerifyPhone({@required this.user});
 
   @override
   _VerifyPhoneState createState() => _VerifyPhoneState();
@@ -18,6 +20,18 @@ class VerifyPhone extends StatefulWidget {
 
 class _VerifyPhoneState extends State<VerifyPhone> {
   String code = "123456";
+  AuthService _auth=new AuthService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _auth.verifyPhone(widget.user.phoneNumber, goToNextScreen, smsUIUpdate, updateUser)
+
+  }
+
+  void goto
+
 
   @override
   Widget build(BuildContext context) {

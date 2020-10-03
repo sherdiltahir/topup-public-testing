@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/phone_verify.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
@@ -15,6 +16,11 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final _text = TextEditingController();
+  User currentUser=new User();
+  bool _validate=false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,8 +133,12 @@ class _RegisterState extends State<Register> {
                               color:darkGreyColor,
                               fontSize: 2.0*SizeConfig.textMultiplier
                           ),
+                          controller: _text,
                           decoration: InputDecoration(
+                              labelText: 'Enter the Value',
+                              errorText: _validate ? 'Please enter full digits' : null,
                               hintText: Strings.mobile_hint_String),
+                          onChanged: _updatePhone,
                         ),
                       ),
                     ),
@@ -145,10 +155,19 @@ class _RegisterState extends State<Register> {
               elevation: 4.0,
               onPressed: () {
                 //Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(
-                    builder:(context)=>VerifyPhone(phoneNumber: "3344556676")
-                ));
+
+                if (currentUser.phoneNumber.length==12)
+                  Navigator.push(context, MaterialPageRoute(
+                      builder:(context)=>VerifyPhone(user: currentUser)
+                  ));
+                else
+                  setState(() {
+                    _validate=true;
+                  });
+                // else
+
               },
+
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
               child: Text(
                 "Login",
@@ -183,6 +202,18 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  void _updatePhone(String value) {
+    if (value.length>0){
+      setState(() {
+        _validate=false;
+      });
+    }
+    if (value.length==10)
+      currentUser.phoneNumber='+7'+value;
+    else
+      currentUser.phoneNumber='';
   }
 }
 
