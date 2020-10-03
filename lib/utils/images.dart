@@ -1,1 +1,1 @@
-var mobile_Image = "assets/images/app_logo.svg";
+var mobile_Image = "assets/images/mobile.svg";
