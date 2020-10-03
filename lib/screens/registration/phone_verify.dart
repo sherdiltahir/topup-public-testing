@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/Services/FirebaseAuthService.dart';
+import 'package:topup/Services/FirebaseDatabaseService.dart';
 import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/screens/registration/re_enter_pin.dart';
 import 'package:topup/utils/color.dart';
@@ -21,19 +24,69 @@ class VerifyPhone extends StatefulWidget {
 }
 
 class _VerifyPhoneState extends State<VerifyPhone> {
-  AuthService _auth=new AuthService();
+  AuthService _auth = new AuthService();
+  DatabaseService databaseService = new DatabaseService();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _auth.verifyPhone(widget.user.phoneNumber, goToNextScreen, smsUIUpdate, updateUser)
-
+    _auth.verifyPhone(
+        widget.user.phoneNumber, goToNextScreen, smsUIUpdate, updateUser);
   }
+
+  Timer _timer;
+  int _start = 50;
+
   String code = "";
 
   bool error = false;
-  bool timer = false;
+  bool timer = true;
+
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) => setState(
+        () {
+          if (_start < 1) {
+            timer.cancel();
+          } else {
+            _start = _start - 1;
+          }
+        },
+      ),
+    );
+  }
+
+  void smsUIUpdate(bool showResent) {
+    if (showResent) {
+      setState(() {
+        timer = false;
+        _timer.cancel();
+      });
+    } else {
+      setState(() {
+        _start = 50;
+        startTimer();
+        timer = true;
+      });
+    }
+  }
+
+  void updateUser(String userId) async {
+    widget.user.id = userId;
+    print('we are at update user ');
+    //Todo: Update the data to database
+    await databaseService.setUserData(widget.user);
+    goToNextScreen();
+  }
+
+  void goToNextScreen() {
+    print('We are clear to sign in Hello wrold');
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => CreatePin(user: widget.user)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +149,6 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-
                   buildCodeNumberBox(
                       code.length > 0 ? code.substring(0, 1) : ""),
                   buildCodeNumberBox(
@@ -115,90 +167,110 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             SizedBox(
               height: 3 * SizeConfig.heightMultiplier,
             ),
-            error==false?
-            SizedBox(
-              height: 3 * SizeConfig.heightMultiplier,
-            ):Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Incorrect code",
-                    style: GoogleFonts.poppins(
-                        color: errorColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 1.7 * SizeConfig.textMultiplier),
-                  ),
-                ),
-                SizedBox(
-                  height: 2 * SizeConfig.heightMultiplier,
-                )
-              ],
-            ),
-            timer==false
-                ? Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          Strings.request_new_code_String,
+            error == false
+                ? SizedBox(
+                    height: 3 * SizeConfig.heightMultiplier,
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Incorrect code",
                           style: GoogleFonts.poppins(
-                              color: darkGreyColor,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 1.45 * SizeConfig.textMultiplier),
+                              color: errorColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 1.7 * SizeConfig.textMultiplier),
                         ),
-                        Text(
-                          "56 sec",
+                      ),
+                      SizedBox(
+                        height: 2 * SizeConfig.heightMultiplier,
+                      )
+                    ],
+                  ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    Strings.request_new_code_String,
+                    style: GoogleFonts.poppins(
+                        color: darkGreyColor,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 1.45 * SizeConfig.textMultiplier),
+                  ),
+                  timer
+                      ? Text(
+                          "$_start sec",
                           style: GoogleFonts.poppins(
                               color: darkGreyColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 1.7 * SizeConfig.textMultiplier),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _auth.verifyPhone(widget.user.phoneNumber,
+                                  goToNextScreen, smsUIUpdate, updateUser);
+                              // startTimer();
+                            });
+                          },
+                          child: Text(
+                            "Resent Code",
+                            style: GoogleFonts.poppins(
+                                color: darkGreyColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 1.7 * SizeConfig.textMultiplier),
+                          ),
                         ),
-                      ],
-                    ),
-                  )
-                :
+                ],
+              ),
+            ),
             MaterialButton(
               padding: EdgeInsets.symmetric(
                   vertical: 1.5 * SizeConfig.heightMultiplier,
                   horizontal: 30 * SizeConfig.widthMultiplier),
               color: themeColor,
               elevation: 4.0,
-              onPressed: () {},
+              onPressed: () {
+                setState(() async {
+                  bool isValid=await _auth.signInWithPhoneNumber(null, code, updateUser);
+                  if(!isValid){
+                    error=true;
+                  }
+                });
+              },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12.0))),
               child: Text(
-                "Resend Code",
+                "Continue",
                 style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 2.1 * SizeConfig.textMultiplier,
                     fontWeight: FontWeight.bold),
               ),
-            )
-
-            ,
+            ),
             SizedBox(
               height: 4 * SizeConfig.heightMultiplier,
             ),
-            // Align(
-            //   alignment: Alignment.center,
-            //   child: GestureDetector(
-            //     onTap: () {
-            //       Navigator.push(context,
-            //           MaterialPageRoute(builder: (context) => ReEnterPin()));
-            //     },
-            //     child: Text(
-            //       Strings.need_help_String,
-            //       style: GoogleFonts.poppins(
-            //           color: blueColor,
-            //           fontWeight: FontWeight.bold,
-            //           fontSize: 2.2 * SizeConfig.textMultiplier),
-            //     ),
-            //   ),
-            // ),
-
+            Align(
+              alignment: Alignment.center,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ReEnterPin()));
+                },
+                child: Text(
+                  Strings.need_help_String,
+                  style: GoogleFonts.poppins(
+                      color: blueColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 2.2 * SizeConfig.textMultiplier),
+                ),
+              ),
+            ),
             NumericPad(
               onNumberSelected: (value) {
                 print(value);
@@ -226,8 +298,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
       child: SizedBox(
         width: 10 * SizeConfig.widthMultiplier,
         height: 5 * SizeConfig.heightMultiplier,
-        child:
-        Container(
+        child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(

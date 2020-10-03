@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/phone_verify.dart';
 import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/utils/color.dart';
@@ -16,6 +17,11 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final _text = TextEditingController();
+  User currentUser=new User();
+  bool _validate=false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

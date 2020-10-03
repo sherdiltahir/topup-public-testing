@@ -5,6 +5,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String verificationId = '';
 
+
   // create user obj based on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
     return user != null ? User(id: user.uid) : null;
@@ -28,7 +29,7 @@ class AuthService {
       Function smsUIUpdate, Function updateUser) async {
     final PhoneVerificationCompleted verified =
         (AuthCredential authResult) async {
-      _signInWithPhoneNumber(authResult, '', updateUser);
+      signInWithPhoneNumber(authResult, '', updateUser);
     };
 
     final PhoneVerificationFailed verificationFailed =
@@ -55,7 +56,7 @@ class AuthService {
         codeAutoRetrievalTimeout: autoTimeout);
   }
 
-  Future<bool> _signInWithPhoneNumber(AuthCredential credential,
+  Future<bool> signInWithPhoneNumber(AuthCredential credential,
       String enteredCode, Function updateUser) async {
     if (credential == null) if (enteredCode != null)
       credential = PhoneAuthProvider.getCredential(
@@ -63,13 +64,19 @@ class AuthService {
     else
       return false;
 
-    await FirebaseAuth.instance
+    bool isValid=await FirebaseAuth.instance
         .signInWithCredential(credential)
         .then((value) async {
       if (value != null) {
         updateUser(value.user.uid);
+        return true;
+      }
+      else{
+        return false;
       }
     });
+    if (!isValid)
+      return false;
     return true;
   }
 
