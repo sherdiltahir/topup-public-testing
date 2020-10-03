@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/phone_verify.dart';
+import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
@@ -44,9 +45,7 @@ class _RegisterState extends State<Register> {
               margin: EdgeInsets.fromLTRB(
                   0, 0, 2.0 * SizeConfig.widthMultiplier, 0),
               child: GestureDetector(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Text(
                   Strings.need_help_String,
                   style: GoogleFonts.poppins(
@@ -130,9 +129,8 @@ class _RegisterState extends State<Register> {
                         child: TextField(
                           keyboardType: TextInputType.number,
                           style: GoogleFonts.poppins(
-                              color:darkGreyColor,
-                              fontSize: 2.0*SizeConfig.textMultiplier
-                          ),
+                              color: darkGreyColor,
+                              fontSize: 2.0 * SizeConfig.textMultiplier),
                           controller: _text,
                           decoration: InputDecoration(
                               labelText: 'Enter the Value',
@@ -150,7 +148,9 @@ class _RegisterState extends State<Register> {
               height: 6 * SizeConfig.heightMultiplier,
             ),
             MaterialButton(
-              padding: EdgeInsets.symmetric(vertical: 1.8*SizeConfig.heightMultiplier,horizontal: 30*SizeConfig.widthMultiplier),
+              padding: EdgeInsets.symmetric(
+                  vertical: 1.5 * SizeConfig.heightMultiplier,
+                  horizontal: 30 * SizeConfig.widthMultiplier),
               color: themeColor,
               elevation: 4.0,
               onPressed: () {
@@ -167,11 +167,14 @@ class _RegisterState extends State<Register> {
                 // else
 
               },
-
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
               child: Text(
                 "Login",
-                style: GoogleFonts.poppins(color: Colors.white,fontSize: 2.1*SizeConfig.textMultiplier,fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 2.1 * SizeConfig.textMultiplier,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(
@@ -182,18 +185,22 @@ class _RegisterState extends State<Register> {
               children: [
                 Text(
                   Strings.no_account_String,
-                  style: GoogleFonts.poppins(fontSize: 1.6*SizeConfig.textMultiplier,fontWeight: FontWeight.w400,color: darkGreyColor),
+                  style: GoogleFonts.poppins(
+                      fontSize: 1.6 * SizeConfig.textMultiplier,
+                      fontWeight: FontWeight.w400,
+                      color: darkGreyColor),
                 ),
                 SizedBox(
-                  width: 1*SizeConfig.widthMultiplier,
+                  width: 1 * SizeConfig.widthMultiplier,
                 ),
                 GestureDetector(
-                  onTap: (){
-
-                  },
+                  onTap: () {},
                   child: Text(
                     "SingUp",
-                    style: GoogleFonts.poppins(fontSize: 2.2*SizeConfig.textMultiplier,fontWeight: FontWeight.bold,color: darkGreyColor),
+                    style: GoogleFonts.poppins(
+                        fontSize: 2.2 * SizeConfig.textMultiplier,
+                        fontWeight: FontWeight.bold,
+                        color: darkGreyColor),
                   ),
                 )
               ],

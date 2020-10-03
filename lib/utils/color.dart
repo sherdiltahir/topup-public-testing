@@ -24,5 +24,6 @@ var blueColor = new Color(0xFF0E6DFF);
 var lightGreyColor2= new Color(0xFFBBBBBB);
 var greyTextColor2 = new Color(0xFF8C98A8);
 var darkBlueColor = new Color(0xFF0A2463);
+var errorColor = new Color(0xFFF15959);
 
 
