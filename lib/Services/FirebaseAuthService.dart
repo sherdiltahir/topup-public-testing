@@ -47,7 +47,7 @@ class AuthService {
     }
   }
 
-  Future<void> verifyPhone(String userPhoneNumber) async {
+  Future<void> verifyPhone(String userPhoneNumber,Function goToNextScreen,Function smsSent,) async {
     final PhoneVerificationCompleted verified =
         (AuthCredential authResult) async {
       _signInWithPhoneNumber(authResult);
@@ -78,10 +78,14 @@ class AuthService {
         codeAutoRetrievalTimeout: autoTimeout);
   }
 
-  void _signInWithPhoneNumber(AuthCredential credential) async {
+  Future<bool> _signInWithPhoneNumber(AuthCredential credential,String enteredCode) async {
     if (credential == null)
-      credential = PhoneAuthProvider.getCredential(
-          verificationId: verificationId, smsCode: enteredCode);
+      if (enteredCode!=null)
+        credential = PhoneAuthProvider.getCredential(
+            verificationId: verificationId, smsCode: enteredCode);
+      else
+        return false;
+
 
     await FirebaseAuth.instance
         .signInWithCredential(credential)
