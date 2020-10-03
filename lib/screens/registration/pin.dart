@@ -135,8 +135,8 @@ Widget buildFilledCircles() {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 1 * SizeConfig.widthMultiplier),
     child: SizedBox(
-      width: 4 * SizeConfig.widthMultiplier,
-      height: 2 * SizeConfig.heightMultiplier,
+      width: 4.2 * SizeConfig.widthMultiplier,
+      height: 2.2 * SizeConfig.heightMultiplier,
       child: Container(
         decoration: BoxDecoration(
           color: darkGreyColor,

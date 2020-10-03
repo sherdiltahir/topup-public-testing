@@ -1,3 +1,5 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:topup/screens/welcome/splash.dart';
 import 'package:topup/utils/color.dart';
@@ -5,7 +7,12 @@ import 'package:topup/utils/size_config.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context)=>MyApp(),
+      ),
+      );
 }
 
 class MyApp extends StatelessWidget {

@@ -3,7 +3,6 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/phone_verify.dart';
 import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/utils/color.dart';
@@ -17,11 +16,6 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final _text = TextEditingController();
-  User currentUser=new User();
-  bool _validate=false;
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +24,7 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: GestureDetector(
-          onTap: (){
-
-          },
+          onTap: () {},
           child: Icon(
             Icons.arrow_back_ios,
             color: darkGreyColor,
@@ -75,13 +67,13 @@ class _RegisterState extends State<Register> {
             Center(
               child: SvgPicture.asset(
                 mobile_Image,
-                height: 10 * SizeConfig.heightMultiplier,
-                width: 10 * SizeConfig.widthMultiplier,
+                height: 8.5 * SizeConfig.heightMultiplier,
+                width: 8.5 * SizeConfig.widthMultiplier,
                 color: themeColor,
               ),
             ),
             SizedBox(
-              height: 2.3 * SizeConfig.heightMultiplier,
+              height: 1.2 * SizeConfig.heightMultiplier,
             ),
             Center(
               child: Text(
@@ -93,7 +85,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
             SizedBox(
-              height: 1.5 * SizeConfig.heightMultiplier,
+              height: 1 * SizeConfig.heightMultiplier,
             ),
             Center(
               child: Text(
@@ -106,7 +98,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
             SizedBox(
-              height: 5 * SizeConfig.heightMultiplier,
+              height: 1.5 * SizeConfig.heightMultiplier,
             ),
             Center(
               child: Padding(
@@ -145,11 +137,11 @@ class _RegisterState extends State<Register> {
               ),
             ),
             SizedBox(
-              height: 6 * SizeConfig.heightMultiplier,
+              height: 1 * SizeConfig.heightMultiplier,
             ),
             MaterialButton(
               padding: EdgeInsets.symmetric(
-                  vertical: 1.5 * SizeConfig.heightMultiplier,
+                  vertical: 1.2 * SizeConfig.heightMultiplier,
                   horizontal: 30 * SizeConfig.widthMultiplier),
               color: themeColor,
               elevation: 4.0,
@@ -178,7 +170,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
             SizedBox(
-              height: 3 * SizeConfig.heightMultiplier,
+              height: 1 * SizeConfig.heightMultiplier,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -223,4 +215,3 @@ class _RegisterState extends State<Register> {
       currentUser.phoneNumber='';
   }
 }
-
