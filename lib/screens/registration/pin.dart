@@ -4,8 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/re_enter_pin.dart';
 import 'package:topup/utils/color.dart';
+import 'package:topup/utils/custom_widgets/numeric_pad.dart';
+import 'package:topup/utils/custom_widgets/pin_circles.dart';
 import 'package:topup/utils/images.dart';
-import 'package:topup/utils/numeric_pad.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
@@ -84,6 +85,7 @@ class _CreatePinState extends State<CreatePin> {
                 pin.length>3? buildFilledCircles():buildCircles(),
                 pin.length>4? buildFilledCircles():buildCircles(),
                 pin.length>5? buildFilledCircles():buildCircles(),
+
               ],
             ),
 
