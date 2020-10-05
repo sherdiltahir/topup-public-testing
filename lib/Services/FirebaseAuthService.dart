@@ -50,7 +50,7 @@ class AuthService {
 
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: userPhoneNumber,
-        timeout: const Duration(seconds: 50),
+        timeout: const Duration(seconds: 60),
         verificationCompleted: verified,
         verificationFailed: verificationFailed,
         codeSent: smsSent,

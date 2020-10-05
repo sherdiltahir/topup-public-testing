@@ -259,7 +259,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             NumericPad(
               onNumberSelected: (value) {
                 print(value);
-                setState(() {
+                setState(() async {
                   if (value != -1) {
                     if (code.length < 6) {
                       code = code + value.toString();
@@ -270,6 +270,12 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   print(code);
                   if(error)
                     error=false;
+                  if(code.length==6){
+                    bool isValid=await _auth.signInWithPhoneNumber(null, code, updateUser);
+                    if(!isValid){
+                      error=true;
+                    }
+                  }
                 });
               },
             ),

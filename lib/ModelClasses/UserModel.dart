@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User{
-  String name='';
-  String id= '';
-  String phoneNumber='';
-  List<dynamic> cards=new List<dynamic>();
-  List<dynamic> couponsIds=new List<dynamic>();
-  String fcmDeviceCode='';
+import 'CardModel.dart';
+
+class User {
+  String name = '';
+  String id = '';
+  String phoneNumber = '';
+  List<Card> cards = new List<Card>();
+  List<dynamic> couponsIds = new List<dynamic>();
+  String fcmDeviceCode = '';
   File picture;
   String pictureUri;
   String securityPin;
@@ -17,8 +19,7 @@ class User{
   String securityQuestion2;
   String securityAnswer2;
 
-
-  Map<String, dynamic>  toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'name': name,
       'id': id,
@@ -35,27 +36,35 @@ class User{
     };
   }
 
+  User(
+      {this.name,
+      this.id,
+      this.phoneNumber,
+      this.cards,
+      this.couponsIds,
+      this.fcmDeviceCode,
+      this.pictureUri,
+      this.securityPin,
+      this.securityQuestion1,
+      this.securityAnswer1});
 
-
-
-  User({this.name, this.id, this.phoneNumber, this.cards, this.couponsIds, this.fcmDeviceCode,
-    this.pictureUri, this.securityPin,this.securityQuestion1, this.securityAnswer1});
-
-  void  fromMap(DocumentSnapshot doc) {
+  void fromMap(DocumentSnapshot doc) {
     this.name = doc.data['name'] ?? '';
     this.id = doc.data['id'];
     this.phoneNumber = doc.data['phoneNumber'];
     this.fcmDeviceCode = doc.data['fcmDeviceCode'] ?? '';
     this.pictureUri = doc.data['pictureUri'] ?? '';
-    if (doc.data['cards'] != null)
-      this.cards = List.castFrom(doc.data['cards'] ?? '');
-    else{
-      this.cards=new List();
+    if (doc.data['Card'] != null)
+    {
+      this.cards = new List();
+      for (var value in doc.data['Card']) {
+        this.cards.add(Card(value));
+      }
     }
     if (doc.data['couponsIds'] != null)
       this.couponsIds = List.castFrom(doc.data['couponsIds'] ?? '');
-    else{
-      this.couponsIds=new List();
+    else {
+      this.couponsIds = new List();
     }
     this.securityPin = doc.data['securityPin'];
     this.securityQuestion1 = doc.data['securityQuestion1'];
