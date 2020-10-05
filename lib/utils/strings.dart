@@ -19,5 +19,7 @@ mobile phone''';
  Terms & Conditions and Private policy''';
   static const String security_questions_String = "Security Questions";
   static const String security_questions_details_String = "Security questions required in changing pin";
+  static const String add_profile_String = "Add your profile details";
+  static const String add_photo_String = "Tap to add photo";
 
 }

@@ -8,7 +8,7 @@ import 'package:topup/utils/size_config.dart';
 
 void main() {
   runApp(
-  //(MyApp()
+  //MyApp()
       DevicePreview(
         enabled: !kReleaseMode,
         builder: (context)=>MyApp(),

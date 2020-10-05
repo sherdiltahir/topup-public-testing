@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topup/screens/registration/add_profile.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
@@ -128,7 +129,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                       style: GoogleFonts.poppins(
                           color: darkGreyColor,
                           fontWeight: FontWeight.w400,
-                          fontSize: 1.6 * SizeConfig.textMultiplier),
+                          fontSize: 1.7 * SizeConfig.textMultiplier),
                     ),
                   ),
                 ),
@@ -138,7 +139,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    margin: EdgeInsets.only(left: 3*SizeConfig.widthMultiplier,right: 3*SizeConfig.widthMultiplier),
+                    margin: EdgeInsets.symmetric(horizontal:  3 * SizeConfig.widthMultiplier),
                     child: DropdownButtonFormField(
                       dropdownColor: Colors.white,
                       items: questionList,
@@ -158,14 +159,14 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    margin: EdgeInsets.only(left: 3*SizeConfig.widthMultiplier,right: 3*SizeConfig.widthMultiplier),
+                    margin: EdgeInsets.symmetric(horizontal:  3 * SizeConfig.widthMultiplier),
                     child: Text(
                       'Question 2',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                           color: darkGreyColor,
                           fontWeight: FontWeight.w400,
-                          fontSize: 1.6 * SizeConfig.textMultiplier),
+                          fontSize: 1.7 * SizeConfig.textMultiplier),
                     ),
                   ),
                 ),
@@ -190,13 +191,14 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                   ),
                 ),
                 SizedBox(
-                  height: 3 * SizeConfig.heightMultiplier,
+                  height: 5 * SizeConfig.heightMultiplier,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
                     onTap: (){
-
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>AddProfile()));
                     },
                     child: Container(
                         decoration: BoxDecoration(
