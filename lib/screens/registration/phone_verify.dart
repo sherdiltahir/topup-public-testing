@@ -283,6 +283,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                     code = code.substring(0, code.length - 1);
                   }
                   print(code);
+                  if(error)
+                    error=false;
                 });
               },
             ),

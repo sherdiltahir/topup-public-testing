@@ -5,7 +5,6 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String verificationId = '';
 
-
   // create user obj based on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
     return user != null ? User(id: user.uid) : null;
@@ -29,6 +28,7 @@ class AuthService {
       Function smsUIUpdate, Function updateUser) async {
     final PhoneVerificationCompleted verified =
         (AuthCredential authResult) async {
+
       signInWithPhoneNumber(authResult, '', updateUser);
     };
 
@@ -39,12 +39,13 @@ class AuthService {
 
     final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
       this.verificationId = verId;
-      smsUIUpdate(false);//False means that the the sms has just been sent wait for 50 seconds and start countdown
+      smsUIUpdate(
+          false); //False means that the the sms has just been sent wait for 50 seconds and start countdown
     };
 
     final PhoneCodeAutoRetrievalTimeout autoTimeout = (String varId) {
       this.verificationId = varId;
-      smsUIUpdate(true);//True means show the resend button
+      smsUIUpdate(true); //True means show the resend button
     };
 
     await FirebaseAuth.instance.verifyPhoneNumber(
@@ -58,26 +59,31 @@ class AuthService {
 
   Future<bool> signInWithPhoneNumber(AuthCredential credential,
       String enteredCode, Function updateUser) async {
-    if (credential == null) if (enteredCode != null)
-      credential = PhoneAuthProvider.getCredential(
-          verificationId: verificationId, smsCode: enteredCode);
-    else
-      return false;
-
-    bool isValid=await FirebaseAuth.instance
-        .signInWithCredential(credential)
-        .then((value) async {
-      if (value != null) {
-        updateUser(value.user.uid);
-        return true;
+    if (credential == null)
+      if (enteredCode != null) {
+        credential = PhoneAuthProvider.getCredential(
+            verificationId: verificationId, smsCode: enteredCode);
       }
-      else{
+    else {
         return false;
       }
-    });
-    if (!isValid)
+    try {
+      bool isValid = await FirebaseAuth.instance
+          .signInWithCredential(credential)
+          .then((value) async {
+        if (value != null) {
+          updateUser(value.user.uid);
+          return true;
+        } else {
+          return false;
+        }
+      });
+      if (!isValid) return false;
+      return true;
+    }
+    on Exception{
       return false;
-    return true;
+    }
   }
 
 // sign out
