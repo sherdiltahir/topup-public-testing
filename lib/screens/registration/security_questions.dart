@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/utils/color.dart';
@@ -59,8 +60,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -194,26 +194,28 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: Container(
-                  child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: themeColor,
-                      ),
-                      margin: EdgeInsets.only(right: 3*SizeConfig.widthMultiplier),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                        size: 10*SizeConfig.imageSizeMultiplier,
-                      )
+                  child: GestureDetector(
+                    onTap: (){
+
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: themeColor,
+                        ),
+                        margin: EdgeInsets.only(right: 3*SizeConfig.widthMultiplier),
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                          size: 10*SizeConfig.imageSizeMultiplier,
+                        )
+                    ),
                   ),
-                ),
                 )
               ],
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
