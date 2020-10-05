@@ -14,5 +14,8 @@ mobile phone''';
   static const String set_pin_String = "Set your PIN";
   static const String reenter_pin_String = "Re-Enter yout PIN";
   static const String secure_payment_String = "Secure your payment with 6-digit pin";
+  static const String already_account_String = "Already have an account?";
+  static const String agree_String = '''By clicking the Register, I agree to TopUp
+ Terms & Conditions and Private policy''';
 
 }

@@ -5,7 +5,7 @@ import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/screens/registration/re_enter_pin.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
-import 'package:topup/utils/numeric_pad.dart';
+import 'file:///E:/Flutter%20Projects/TopUp%20App/topup/lib/utils/custom_widgets/numeric_pad.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
@@ -170,23 +170,6 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             SizedBox(
               height: 4 * SizeConfig.heightMultiplier,
             ),
-            // Align(
-            //   alignment: Alignment.center,
-            //   child: GestureDetector(
-            //     onTap: () {
-            //       Navigator.push(context,
-            //           MaterialPageRoute(builder: (context) => ReEnterPin()));
-            //     },
-            //     child: Text(
-            //       Strings.need_help_String,
-            //       style: GoogleFonts.poppins(
-            //           color: blueColor,
-            //           fontWeight: FontWeight.bold,
-            //           fontSize: 2.2 * SizeConfig.textMultiplier),
-            //     ),
-            //   ),
-            // ),
-
             NumericPad(
               onNumberSelected: (value) {
                 print(value);

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
-import 'package:topup/utils/numeric_pad.dart';
+import 'file:///E:/Flutter%20Projects/TopUp%20App/topup/lib/utils/custom_widgets/numeric_pad.dart';
+import 'file:///E:/Flutter%20Projects/TopUp%20App/topup/lib/utils/custom_widgets/pin_circles.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
@@ -107,46 +109,4 @@ class _ReEnterPinState extends State<ReEnterPin> {
       ),
     );
   }
-}
-
-Widget buildCircles() {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 1 * SizeConfig.widthMultiplier),
-    child: SizedBox(
-      width: 4 * SizeConfig.widthMultiplier,
-      height: 2 * SizeConfig.heightMultiplier,
-      child: Container(
-        decoration: BoxDecoration(
-          color: lightGreyColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(25),
-          ),
-          boxShadow: <BoxShadow>[
-
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-Widget buildFilledCircles() {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 1 * SizeConfig.widthMultiplier),
-    child: SizedBox(
-      width: 4.2 * SizeConfig.widthMultiplier,
-      height: 2.2 * SizeConfig.heightMultiplier,
-      child: Container(
-        decoration: BoxDecoration(
-          color: darkGreyColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(25),
-          ),
-          boxShadow: <BoxShadow>[
-
-          ],
-        ),
-      ),
-    ),
-  );
 }

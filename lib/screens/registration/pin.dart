@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/utils/color.dart';
+import 'package:topup/utils/custom_widgets/numeric_pad.dart';
+import 'package:topup/utils/custom_widgets/pin_circles.dart';
 import 'package:topup/utils/images.dart';
-import 'package:topup/utils/numeric_pad.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
@@ -68,7 +69,6 @@ class _CreatePinState extends State<CreatePin> {
             SizedBox(
               height: 8 * SizeConfig.heightMultiplier,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -81,11 +81,9 @@ class _CreatePinState extends State<CreatePin> {
 
               ],
             ),
-
             SizedBox(
               height: 8 * SizeConfig.heightMultiplier,
             ),
-
             NumericPad(
               onNumberSelected: (value) {
                 print(value);
@@ -102,7 +100,6 @@ class _CreatePinState extends State<CreatePin> {
                 });
               },
             ),
-
           ],
         ),
       ),
@@ -110,44 +107,7 @@ class _CreatePinState extends State<CreatePin> {
   }
 }
 
-Widget buildCircles() {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 1 * SizeConfig.widthMultiplier),
-    child: SizedBox(
-      width: 4 * SizeConfig.widthMultiplier,
-      height: 2 * SizeConfig.heightMultiplier,
-      child: Container(
-        decoration: BoxDecoration(
-          color: lightGreyColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(25),
-          ),
-          boxShadow: <BoxShadow>[
 
-          ],
-        ),
-      ),
-    ),
-  );
-}
 
-Widget buildFilledCircles() {
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 1 * SizeConfig.widthMultiplier),
-    child: SizedBox(
-      width: 4.2 * SizeConfig.widthMultiplier,
-      height: 2.2 * SizeConfig.heightMultiplier,
-      child: Container(
-        decoration: BoxDecoration(
-          color: darkGreyColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(25),
-          ),
-          boxShadow: <BoxShadow>[
 
-          ],
-        ),
-      ),
-    ),
-  );
-}
+
