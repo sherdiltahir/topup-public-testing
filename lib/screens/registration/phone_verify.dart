@@ -36,7 +36,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   }
 
   Timer _timer;
-  int _start = 50;
+  int _start = 60;
 
   String code = "";
 
@@ -67,7 +67,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
       });
     } else {
       setState(() {
-        _start = 50;
+        _start = 60;
         startTimer();
         timer = true;
       });
@@ -191,7 +191,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   ),
             Align(
               alignment: Alignment.centerLeft,
-              child: Row(
+              child: timer==true? Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
@@ -201,76 +201,61 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                         fontWeight: FontWeight.w300,
                         fontSize: 1.45 * SizeConfig.textMultiplier),
                   ),
-                  timer
-                      ? Text(
-                          "$_start sec",
-                          style: GoogleFonts.poppins(
-                              color: darkGreyColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 1.7 * SizeConfig.textMultiplier),
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _auth.verifyPhone(widget.user.phoneNumber,
-                                  goToNextScreen, smsUIUpdate, updateUser);
-                              // startTimer();
-                            });
-                          },
-                          child: Text(
-                            "Resent Code",
-                            style: GoogleFonts.poppins(
-                                color: darkGreyColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 1.7 * SizeConfig.textMultiplier),
-                          ),
-                        ),
+                  Text(
+                    "$_start sec",
+                    style: GoogleFonts.poppins(
+                        color: darkGreyColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 1.7 * SizeConfig.textMultiplier),
+                  )
+
                 ],
-              ),
+
+            ): Align(
+                alignment: Alignment.center,
+              child: MaterialButton(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 1.5 * SizeConfig.heightMultiplier,
+                      horizontal: 30 * SizeConfig.widthMultiplier),
+                  color: themeColor,
+                  elevation: 4.0,
+                  onPressed: () {
+                    setState(() {
+                      _auth.verifyPhone(widget.user.phoneNumber,
+                          goToNextScreen, smsUIUpdate, updateUser);
+                    });
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                  child: Text(
+                    "Resend code",
+                    style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 2.1 * SizeConfig.textMultiplier,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
             ),
-            MaterialButton(
-              padding: EdgeInsets.symmetric(
-                  vertical: 1.5 * SizeConfig.heightMultiplier,
-                  horizontal: 30 * SizeConfig.widthMultiplier),
-              color: themeColor,
-              elevation: 4.0,
-              onPressed: () {
-                setState(() async {
-                  bool isValid=await _auth.signInWithPhoneNumber(null, code, updateUser);
-                  if(!isValid){
-                    error=true;
-                  }
-                });
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
-              child: Text(
-                "Continue",
-                style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 2.1 * SizeConfig.textMultiplier,
-                    fontWeight: FontWeight.bold),
-              ),
             ),
             SizedBox(
               height: 4 * SizeConfig.heightMultiplier,
             ),
-            Align(
-              alignment: Alignment.center,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ReEnterPin()));
-                },
-                child: Text(
-                  Strings.need_help_String,
-                  style: GoogleFonts.poppins(
-                      color: blueColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 2.2 * SizeConfig.textMultiplier),
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.center,
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       Navigator.push(context,
+            //           MaterialPageRoute(builder: (context) => ReEnterPin()));
+            //     },
+            //     child: Text(
+            //       Strings.need_help_String,
+            //       style: GoogleFonts.poppins(
+            //           color: blueColor,
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 2.2 * SizeConfig.textMultiplier),
+            //     ),
+            //   ),
+            // ),
             NumericPad(
               onNumberSelected: (value) {
                 print(value);

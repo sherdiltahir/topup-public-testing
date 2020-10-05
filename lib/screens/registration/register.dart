@@ -17,9 +17,14 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
+
   final _text = TextEditingController();
   User currentUser=new User();
   bool _validate=false;
+  String _phone_number = null;
 
 
   @override
@@ -63,163 +68,192 @@ class _RegisterState extends State<Register> {
               fontSize: 2.2 * SizeConfig.textMultiplier),
         ),
       ),
-      body: Container(
-        margin: EdgeInsets.symmetric(
-            vertical: 1.5 * SizeConfig.heightMultiplier,
-            horizontal: 3.5 * SizeConfig.widthMultiplier),
-        child: SingleChildScrollView(
-          child:Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Center(
-                child: SvgPicture.asset(
-                  mobile_Image,
-                  height: 8.5 * SizeConfig.heightMultiplier,
-                  width: 8.5 * SizeConfig.widthMultiplier,
-                  color: themeColor,
+      body: Form(
+        key: _formKey,
+        autovalidate: _autoValidate,
+        child: Container(
+          margin: EdgeInsets.symmetric(
+              vertical: 1.5 * SizeConfig.heightMultiplier,
+              horizontal: 3.5 * SizeConfig.widthMultiplier),
+          child: SingleChildScrollView(
+            child:Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Center(
+                  child: SvgPicture.asset(
+                    mobile_Image,
+                    height: 8.5 * SizeConfig.heightMultiplier,
+                    width: 8.5 * SizeConfig.widthMultiplier,
+                    color: themeColor,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 1.5 * SizeConfig.heightMultiplier,
-              ),
-              Center(
-                child: Text(
-                  Strings.mobile_number_String,
-                  style: GoogleFonts.poppins(
-                      color: darkGreyColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 2.2 * SizeConfig.textMultiplier),
+                SizedBox(
+                  height: 1.5 * SizeConfig.heightMultiplier,
                 ),
-              ),
-              SizedBox(
-                height: 1 * SizeConfig.heightMultiplier,
-              ),
-              Center(
-                child: Text(
-                  Strings.mobile_verfication_String,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      color: darkGreyColor,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 1.6 * SizeConfig.textMultiplier),
+                Center(
+                  child: Text(
+                    Strings.mobile_number_String,
+                    style: GoogleFonts.poppins(
+                        color: darkGreyColor,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 2.2 * SizeConfig.textMultiplier),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 3 * SizeConfig.heightMultiplier,
-              ),
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 3.5 * SizeConfig.widthMultiplier),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "+7",
-                        style: GoogleFonts.poppins(
-                            color: darkGreyColor,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 2.0 * SizeConfig.textMultiplier),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 3 * SizeConfig.widthMultiplier),
-                          child: TextField(
-                            controller: _text,
-                            keyboardType: TextInputType.number,
-                            onChanged: _updatePhone,
-                            style: GoogleFonts.poppins(
-                                color: darkGreyColor,
-                                fontSize: 2.0 * SizeConfig.textMultiplier),
-                            decoration: InputDecoration(
-                                labelText: 'Enter the Value',
-                                errorText: _validate ? 'Please enter full digits' : null,
-                                hintText: Strings.mobile_hint_String),
+                SizedBox(
+                  height: 1 * SizeConfig.heightMultiplier,
+                ),
+                Center(
+                  child: Text(
+                    Strings.mobile_verfication_String,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                        color: darkGreyColor,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 1.6 * SizeConfig.textMultiplier),
+                  ),
+                ),
+                SizedBox(
+                  height: 3 * SizeConfig.heightMultiplier,
+                ),
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 3.5 * SizeConfig.widthMultiplier),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "+7",
+                          style: GoogleFonts.poppins(
+                              color: darkGreyColor,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 2.0 * SizeConfig.textMultiplier),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 3 * SizeConfig.widthMultiplier),
+                            child: TextFormField(
+                              controller: _text,
+                              keyboardType: TextInputType.number,
+                              onChanged: _updatePhone,
+                              style: GoogleFonts.poppins(
+                                  color: darkGreyColor,
+                                  fontSize: 2.0 * SizeConfig.textMultiplier),
+                              validator: (String phone_number){
+                                if(phone_number!=10)
+                                  return 'Enter a valid phone number';
+                                else
+                                  return null;
+                              },
+                             // onSaved: ,
+                              decoration: InputDecoration(
+                                  errorText: _validate ? 'Enter a valid phone number' : null,
+                                  hintText: Strings.mobile_hint_String),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 5 * SizeConfig.heightMultiplier,
-              ),
-              MaterialButton(
-                padding: EdgeInsets.symmetric(
-                    vertical: 1.2 * SizeConfig.heightMultiplier,
-                    horizontal: 30 * SizeConfig.widthMultiplier),
-                color: themeColor,
-                elevation: 4.0,
-                onPressed: () {
-                  //Navigator.pop(context);
-                  if (currentUser.phoneNumber.length==12)
-                    Navigator.push(context, MaterialPageRoute(
-                        builder:(context)=>VerifyPhone(user: currentUser)
-                    ));
-                  else
-                    setState(() {
-                      _validate=true;
-                    });
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                child: Text(
-                  "Register",
-                  style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 2.1 * SizeConfig.textMultiplier,
-                      fontWeight: FontWeight.bold),
+                SizedBox(
+                  height: 5 * SizeConfig.heightMultiplier,
                 ),
-              ),
-              SizedBox(
-                height: 2.5 * SizeConfig.heightMultiplier,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    Strings.already_account_String,
+                MaterialButton(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 1.2 * SizeConfig.heightMultiplier,
+                      horizontal: 30 * SizeConfig.widthMultiplier),
+                  color: themeColor,
+                  elevation: 4.0,
+                  onPressed: () {
+                    //Navigator.pop(context);
+                    if (currentUser.phoneNumber.length==12)
+                      Navigator.push(context, MaterialPageRoute(
+                          builder:(context)=>VerifyPhone(user: currentUser)
+                      ));
+                    else
+                      setState(() {
+                        _validate=true;
+                      });
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                  child: Text(
+                    "Register",
                     style: GoogleFonts.poppins(
-                        fontSize: 1.6 * SizeConfig.textMultiplier,
-                        fontWeight: FontWeight.w400,
-                        color: darkGreyColor),
+                        color: Colors.white,
+                        fontSize: 2.1 * SizeConfig.textMultiplier,
+                        fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
-                    width: 1 * SizeConfig.widthMultiplier,
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      "Login",
+                ),
+                SizedBox(
+                  height: 2.5 * SizeConfig.heightMultiplier,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      Strings.already_account_String,
                       style: GoogleFonts.poppins(
-                          fontSize: 2.2 * SizeConfig.textMultiplier,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 1.6 * SizeConfig.textMultiplier,
+                          fontWeight: FontWeight.w400,
                           color: darkGreyColor),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 25 * SizeConfig.heightMultiplier,
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  Strings.agree_String,
-                  style: GoogleFonts.poppins(
-                    color: darkGreyColor,
-                    fontSize: 1.35 * SizeConfig.textMultiplier,
-                    fontWeight: FontWeight.w400,
+                    SizedBox(
+                      width: 1 * SizeConfig.widthMultiplier,
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        "Login",
+                        style: GoogleFonts.poppins(
+                            fontSize: 2.2 * SizeConfig.textMultiplier,
+                            fontWeight: FontWeight.bold,
+                            color: darkGreyColor),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 25 * SizeConfig.heightMultiplier,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    Strings.agree_String,
+                    style: GoogleFonts.poppins(
+                      color: darkGreyColor,
+                      fontSize: 1.35 * SizeConfig.textMultiplier,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  String validateMobile(String value) {
+    if (value.length != 10)
+      return 'Mobile Number must be of 10 digit';
+    else
+      return null;
+  }
+
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+//    If all data are correct then save data to out variables
+      _formKey.currentState.save();
+    } else {
+//    If all data are not valid then start auto validation.
+      setState(() {
+        _autoValidate = true;
+      });
+    }
   }
 
   void _updatePhone(String value) {
