@@ -17,5 +17,7 @@ mobile phone''';
   static const String already_account_String = "Already have an account?";
   static const String agree_String = '''By clicking the Register, I agree to TopUp
  Terms & Conditions and Private policy''';
+  static const String security_questions_String = "Security Questions";
+  static const String security_questions_details_String = "Security questions required in changing pin";
 
 }
