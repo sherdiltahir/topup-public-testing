@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Card {
+class BankCard {
   String cardId;
   String cardName;
   String cardExpiry;
@@ -20,15 +20,15 @@ class Card {
       'cardKey': cardKey,
     };
   }
-  Card(var doc){
+  BankCard.doc(var doc){
     this.fromMap(doc);
   }
-  // Card(
-  //     {this.cardId,
-  //     this.cardName,
-  //     this.cardExpiry,
-  //     this.cardNumber,
-  //     this.cardKey});
+  BankCard(
+      {this.cardId,
+      this.cardName,
+      this.cardExpiry,
+      this.cardNumber,
+      this.cardKey});
 
   void fromMap(var doc) {
     this.cardId = doc['cardId'] ?? '';

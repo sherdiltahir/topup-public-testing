@@ -8,7 +8,7 @@ class User {
   String name = '';
   String id = '';
   String phoneNumber = '';
-  List<Card> cards = new List<Card>();
+  List<BankCard> cards = new List<BankCard>();
   List<dynamic> couponsIds = new List<dynamic>();
   String fcmDeviceCode = '';
   File picture;
@@ -20,11 +20,13 @@ class User {
   String securityAnswer2;
 
   Map<String, dynamic> toMap() {
-    return {
+    var ret= {
       'name': name,
       'id': id,
       'phone': phoneNumber,
-      'card': cards,
+      'cards': cards.map((BankCard bankCard){
+        return bankCard.toMap();
+      }).toList(),
       'couponsIds': couponsIds,
       'fcmDeviceCode': fcmDeviceCode,
       'pictureUri': pictureUri,
@@ -34,6 +36,7 @@ class User {
       'securityQuestion2': securityQuestion2,
       'securityAnswer2': securityAnswer2,
     };
+    return ret;
   }
 
   User(
@@ -58,7 +61,7 @@ class User {
     {
       this.cards = new List();
       for (var value in doc.data['Card']) {
-        this.cards.add(Card(value));
+        this.cards.add(BankCard.doc(value));
       }
     }
     if (doc.data['couponsIds'] != null)

@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Complains{
+class Complain{
   String complainText;
   String complainBy;
   String complainId;
@@ -22,7 +22,7 @@ class Complains{
       'lastUpdateTime': lastUpdateTime,
     };
   }
-  Complains(
+  Complain(
       {this.complainText,
         this.complainBy,
         this.complainId,
