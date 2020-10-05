@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'file:///E:/Flutter%20Projects/TopUp%20App/topup/lib/utils/custom_widgets/numeric_pad.dart';
+
+import 'custom_widgets/numeric_pad.dart';
 
 class VerifyPhone extends StatefulWidget {
 
