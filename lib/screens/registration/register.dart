@@ -126,11 +126,15 @@ class _RegisterState extends State<Register> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 3 * SizeConfig.widthMultiplier),
                           child: TextField(
+                            controller: _text,
                             keyboardType: TextInputType.number,
+                            onChanged: _updatePhone,
                             style: GoogleFonts.poppins(
                                 color: darkGreyColor,
                                 fontSize: 2.0 * SizeConfig.textMultiplier),
                             decoration: InputDecoration(
+                                labelText: 'Enter the Value',
+                                errorText: _validate ? 'Please enter full digits' : null,
                                 hintText: Strings.mobile_hint_String),
                           ),
                         ),
@@ -150,12 +154,14 @@ class _RegisterState extends State<Register> {
                 elevation: 4.0,
                 onPressed: () {
                   //Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                          // VerifyPhone()
-                          CreatePin()));
+                  if (currentUser.phoneNumber.length==12)
+                    Navigator.push(context, MaterialPageRoute(
+                        builder:(context)=>VerifyPhone(user: currentUser)
+                    ));
+                  else
+                    setState(() {
+                      _validate=true;
+                    });
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(12.0))),
