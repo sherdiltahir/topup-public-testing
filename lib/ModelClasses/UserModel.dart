@@ -20,13 +20,13 @@ class User {
   String securityAnswer2;
 
   Map<String, dynamic> toMap() {
-    var ret= {
+    return  {
       'name': name,
       'id': id,
       'phone': phoneNumber,
-      'cards': cards.map((BankCard bankCard){
+      'cards':cards!=null?cards.map((BankCard bankCard){
         return bankCard.toMap();
-      }).toList(),
+      }).toList():new List(),
       'couponsIds': couponsIds,
       'fcmDeviceCode': fcmDeviceCode,
       'pictureUri': pictureUri,
@@ -36,7 +36,6 @@ class User {
       'securityQuestion2': securityQuestion2,
       'securityAnswer2': securityAnswer2,
     };
-    return ret;
   }
 
   User(

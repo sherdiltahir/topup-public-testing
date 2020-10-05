@@ -10,9 +10,6 @@ import 'package:topup/ModelClasses/PetrolPumpModel.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 
 class DatabaseService {
-  String otherUid;
-  String shipmentId;
-
   DatabaseService();
 
   // collection reference

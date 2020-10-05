@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/pin.dart';
+import 'package:topup/screens/registration/security_questions.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/custom_widgets/numeric_pad.dart';
 import 'package:topup/utils/images.dart';
@@ -95,6 +96,7 @@ class _ReEnterPinState extends State<ReEnterPin> {
               onNumberSelected: (value) {
                 print(value);
                 setState(() {
+                  error='';
                   if(value != -1){
                     if(pin.length < 6){
                       pin = pin + value.toString();
@@ -104,6 +106,14 @@ class _ReEnterPinState extends State<ReEnterPin> {
                     pin = pin.substring(0, pin.length - 1);
                   }
                   print(pin);
+                  if(pin.length==6)
+                    if(pin!=widget.user.securityPin)
+                      error='The pins Do not match';
+                    else{
+                      widget.user.securityPin=pin;
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SecurityQuestions(user:widget.user)));
+                    }
                 });
               },
             ),
@@ -114,37 +124,37 @@ class _ReEnterPinState extends State<ReEnterPin> {
             SizedBox(
               height: 4 * SizeConfig.heightMultiplier,
             ),
-            MaterialButton(
-              padding: EdgeInsets.symmetric(
-                  vertical: 1.5 * SizeConfig.heightMultiplier,
-                  horizontal: 30 * SizeConfig.widthMultiplier),
-              color: themeColor,
-              elevation: 4.0,
-              onPressed: () {
-                setState(() {
-                  if(pin.length!=6)
-                    setState(() {
-                      error='Please enter complete digits';
-                    });
-                  else if(pin!=widget.user.securityPin)
-                    error='The pins Do not match';
-                  else{
-                    widget.user.securityPin=pin;
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => ReEnterPin(user:widget.user)));
-                  }
-                });
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
-              child: Text(
-                "Continue",
-                style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 2.1 * SizeConfig.textMultiplier,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
+            // MaterialButton(
+            //   padding: EdgeInsets.symmetric(
+            //       vertical: 1.5 * SizeConfig.heightMultiplier,
+            //       horizontal: 30 * SizeConfig.widthMultiplier),
+            //   color: themeColor,
+            //   elevation: 4.0,
+            //   onPressed: () {
+            //     setState(() {
+            //       if(pin.length!=6)
+            //         setState(() {
+            //           error='Please enter complete digits';
+            //         });
+            //       else if(pin!=widget.user.securityPin)
+            //         error='The pins Do not match';
+            //       else{
+            //         widget.user.securityPin=pin;
+            //         // Navigator.push(context,
+            //         //     MaterialPageRoute(builder: (context) => ReEnterPin(user:widget.user)));
+            //       }
+            //     });
+            //   },
+            //   shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.all(Radius.circular(12.0))),
+            //   child: Text(
+            //     "Continue",
+            //     style: GoogleFonts.poppins(
+            //         color: Colors.white,
+            //         fontSize: 2.1 * SizeConfig.textMultiplier,
+            //         fontWeight: FontWeight.bold),
+            //   ),
+            // ),
 
           ],
         ),

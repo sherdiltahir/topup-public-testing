@@ -21,7 +21,7 @@ class CreatePin extends StatefulWidget {
 class _CreatePinState extends State<CreatePin> {
 
   String pin= "";
-  String error='';
+  // String error='';
 
   @override
   Widget build(BuildContext context) {
@@ -106,47 +106,50 @@ class _CreatePinState extends State<CreatePin> {
                     pin = pin.substring(0, pin.length - 1);
                   }
                   print(pin);
-                  error='';
-                });
-              },
-            ),
-            SizedBox(
-              height: 4 * SizeConfig.heightMultiplier,
-            ),
-            Text(error,style: TextStyle(color: Colors.red)),
-            SizedBox(
-              height: 4 * SizeConfig.heightMultiplier,
-            ),
-            MaterialButton(
-              padding: EdgeInsets.symmetric(
-                  vertical: 1.5 * SizeConfig.heightMultiplier,
-                  horizontal: 30 * SizeConfig.widthMultiplier),
-              color: themeColor,
-              elevation: 4.0,
-              onPressed: () {
-                setState(() async {
-                  if(pin.length!=6)
-                    setState(() {
-                      error='Please enter complete digits';
-                    });
-                  else{
+                  if (pin.length==6){
                     widget.user.securityPin=pin;
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => ReEnterPin(user:widget.user)));
                   }
                 });
               },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
-              child: Text(
-                "Continue",
-                style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 2.1 * SizeConfig.textMultiplier,
-                    fontWeight: FontWeight.bold),
-              ),
             ),
-
+            SizedBox(
+              height: 4 * SizeConfig.heightMultiplier,
+            ),
+            // Text(error,style: TextStyle(color: Colors.red)),
+            // SizedBox(
+            //   height: 4 * SizeConfig.heightMultiplier,
+            // ),
+            // MaterialButton(
+            //   padding: EdgeInsets.symmetric(
+            //       vertical: 1.5 * SizeConfig.heightMultiplier,
+            //       horizontal: 30 * SizeConfig.widthMultiplier),
+            //   color: themeColor,
+            //   elevation: 4.0,
+            //   onPressed: () {
+            //     setState(() async {
+            //       if(pin.length!=6)
+            //         setState(() {
+            //           error='Please enter complete digits';
+            //         });
+            //       else{
+            //         widget.user.securityPin=pin;
+            //         Navigator.push(context,
+            //             MaterialPageRoute(builder: (context) => ReEnterPin(user:widget.user)));
+            //       }
+            //     });
+            //   },
+            //   shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.all(Radius.circular(12.0))),
+            //   child: Text(
+            //     "Continue",
+            //     style: GoogleFonts.poppins(
+            //         color: Colors.white,
+            //         fontSize: 2.1 * SizeConfig.textMultiplier,
+            //         fontWeight: FontWeight.bold),
+            //   ),
+            // ),
           ],
         ),
       ),

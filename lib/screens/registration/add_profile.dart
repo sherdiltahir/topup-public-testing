@@ -5,18 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
+import 'package:topup/Services/FirebaseDatabaseService.dart';
+import 'package:topup/Services/FirebaseStorageService.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class AddProfile extends StatefulWidget {
+  final User user;
+
+  const AddProfile({Key key, this.user}) : super(key: key);
+
   @override
   _AddProfileState createState() => _AddProfileState();
 }
 
 class _AddProfileState extends State<AddProfile> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _text = TextEditingController();
 
   bool _validate = false;
@@ -165,7 +171,25 @@ class _AddProfileState extends State<AddProfile> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () async {
+                        if(_text.text.length<2){
+                          setState(() {
+                            _validate=true;
+                          });
+                        }
+                        else{
+                          widget.user.name=_text.text;
+                          if(_image!=null)
+                            widget.user.picture=_image;
+                          widget.user.pictureUri=await StorageService().uploadUserProfile(_image, "User Profile", widget.user.id);
+                          await DatabaseService().setUserData(widget.user);
+                          setState(() {
+                          _validate=false;
+                        });
+                        }
+
+
+
                         // Navigator.push(context,
                         //     MaterialPageRoute(builder: (context) =>AddProfile()));
                       },

@@ -30,7 +30,6 @@ class Coupon{
         this.price,
         this.couponId,
         this.fuelType,
-        this.price,
         this.currentOwnerId,
       });
 
@@ -41,7 +40,6 @@ class Coupon{
     this.price = doc.data['price'] ?? '';
     this.couponId = doc.data['couponId'];
     this.fuelType = doc.data['fuelType'];
-    this.price = doc.data['price'];
     this.currentOwnerId = doc.data['currentOwnerId'];
   }
 }

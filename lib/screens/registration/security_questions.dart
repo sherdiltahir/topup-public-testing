@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/add_profile.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
@@ -9,13 +10,17 @@ import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class SecurityQuestions extends StatefulWidget {
+  final User user;
+
+  const SecurityQuestions({Key key, this.user}) : super(key: key);
   @override
   _SecurityQuestionsState createState() => _SecurityQuestionsState();
 }
 
 class _SecurityQuestionsState extends State<SecurityQuestions> {
 
-  int _questionSelected;
+  int _questionSelected1;
+  int _questionSelected2;
 
   List<DropdownMenuItem<int>> questionList = [];
 
@@ -143,10 +148,10 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                     child: DropdownButtonFormField(
                       dropdownColor: Colors.white,
                       items: questionList,
-                      value: _questionSelected,
+                      value: _questionSelected1,
                       onChanged: (value){
                         setState(() {
-                          _questionSelected = value;
+                          _questionSelected1 = value;
                         });
                       },
                       isExpanded: true,
@@ -180,10 +185,10 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                       child: DropdownButtonFormField(
                         dropdownColor: Colors.white,
                         items: questionList,
-                        value: _questionSelected,
+                        value: _questionSelected2,
                         onChanged: (value){
                           setState(() {
-                            _questionSelected = value;
+                            _questionSelected2 = value;
                           });
                         },
                         isExpanded: true,
@@ -198,7 +203,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                   child: GestureDetector(
                     onTap: (){
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>AddProfile()));
+                          MaterialPageRoute(builder: (context) =>AddProfile(user: widget.user)));
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -213,7 +218,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                         )
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

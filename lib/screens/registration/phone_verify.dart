@@ -46,7 +46,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
 
   bool _error = false;
   bool timer = true;
-  bool _phone_verified = false;
+  bool _phone_verified = true;
 
 
 
@@ -84,7 +84,6 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   void updateUser(String userId) async {
     widget.user.id = userId;
     print('we are at update user ');
-    //Todo: Update the data to database
     await databaseService.setUserData(widget.user);
     goToNextScreen();
   }
@@ -271,6 +270,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   print(value);
                   setState(() async {
                     _error=false;
+
                     if (value != -1) {
                       if (_code.length < 6) {
                         _code = _code + value.toString();
@@ -278,10 +278,13 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                     } else {
                       _code = _code.substring(0, _code.length - 1);
                     }
-                    print(_code);
-                    if (_code.length==6 && !await _auth.signInWithPhoneNumber(null, _code, updateUser)) {
-                      _error=true;
+                    if (_code.length==6 ) {
+                      _phone_verified=false;
+                      if (!await _auth.signInWithPhoneNumber(null, _code, updateUser)) {
+                        _error = true;
+                      }
                     }
+                    _phone_verified=true;
                   });
                 },
               ),
