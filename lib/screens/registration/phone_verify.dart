@@ -17,8 +17,9 @@ import 'package:topup/utils/strings.dart';
 
 class VerifyPhone extends StatefulWidget {
   final User user;
+  final bool register;
 
-  VerifyPhone({@required this.user});
+  VerifyPhone({@required this.user,@required this.register});
 
   @override
   _VerifyPhoneState createState() => _VerifyPhoneState();

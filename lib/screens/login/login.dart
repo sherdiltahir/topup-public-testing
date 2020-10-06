@@ -1,24 +1,24 @@
-import 'dart:ffi';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/login/login.dart';
 import 'package:topup/screens/registration/phone_verify.dart';
 import 'package:topup/screens/registration/pin.dart';
+import 'package:topup/screens/registration/register.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
-class Register extends StatefulWidget {
+
+class Login extends StatefulWidget {
   @override
-  _RegisterState createState() => _RegisterState();
+  _LoginState createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
+class _LoginState extends State<Login> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
@@ -27,7 +27,6 @@ class _RegisterState extends State<Register> {
   User currentUser=new User();
   bool _validate=false;
   String _phone_number = null;
-
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +63,7 @@ class _RegisterState extends State<Register> {
             )
           ],
           title: Text(
-            "Register",
+            "Login",
             style: GoogleFonts.poppins(
                 color: darkGreyColor,
                 fontWeight: FontWeight.w400,
@@ -125,11 +124,7 @@ class _RegisterState extends State<Register> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Image.asset(flag_Image,width: 8.5*SizeConfig.widthMultiplier,height: 8.5*SizeConfig.heightMultiplier,),
-                          SizedBox(
-                            width: 1 * SizeConfig.widthMultiplier,
-                          ),
-                           Text(
+                          Text(
                             "+7",
                             style: GoogleFonts.poppins(
                                 color: darkGreyColor,
@@ -153,9 +148,9 @@ class _RegisterState extends State<Register> {
                                   else
                                     return null;
                                 },
-                                onSaved: (String val){
-                                  _phone_number=val;
-                                },
+                              onSaved: (String val){
+                                _phone_number=val;
+                              },
                                 decoration: InputDecoration(
                                     errorText: _validate ? 'Enter a valid phone number' : null,
                                     hintText: Strings.mobile_hint_String),
@@ -180,7 +175,7 @@ class _RegisterState extends State<Register> {
                         _formKey.currentState.save();
                         Navigator.pop(context);
                         Navigator.push(context, MaterialPageRoute(
-                            builder:(context)=>VerifyPhone(user: currentUser,register: true)
+                            builder:(context)=>VerifyPhone(user: currentUser,register: false)
                         ));
 
                       }else{
@@ -207,7 +202,7 @@ class _RegisterState extends State<Register> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        Strings.already_account_String,
+                        Strings. no_account_String,
                         style: GoogleFonts.poppins(
                             fontSize: 1.6 * SizeConfig.textMultiplier,
                             fontWeight: FontWeight.w400,
@@ -219,11 +214,11 @@ class _RegisterState extends State<Register> {
                       GestureDetector(
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
-                              builder:(context)=>Login()
+                              builder:(context)=>Register()
                           ));
                         },
                         child: Text(
-                          "Login",
+                          "Register",
                           style: GoogleFonts.poppins(
                               fontSize: 2.2 * SizeConfig.textMultiplier,
                               fontWeight: FontWeight.bold,
@@ -232,93 +227,6 @@ class _RegisterState extends State<Register> {
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: 25 * SizeConfig.heightMultiplier,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Row(
-                      children: [
-                        Image.asset(flag_Image,width: 8.5*SizeConfig.widthMultiplier,height: 8.5*SizeConfig.heightMultiplier,),
-                        SizedBox(
-                          width: 2 * SizeConfig.widthMultiplier,
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: (){
-                              
-                            },
-                            child: RichText(
-                              text:TextSpan(
-                                text:'By clicking the ',
-                                style: GoogleFonts.poppins(
-                                  color: darkGreyColor,
-                                  fontSize: 1.35 * SizeConfig.textMultiplier,
-                                  fontWeight: FontWeight.w400,
-                              ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Register',
-                                      style: GoogleFonts.poppins(
-                                        color: darkBlueColor,
-                                        fontSize: 1.37 * SizeConfig.textMultiplier,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text:', I agree to TopUp ',
-                                          style: GoogleFonts.poppins(
-                                            color: darkGreyColor,
-                                            fontSize: 1.35 * SizeConfig.textMultiplier,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                              text: 'Terms & Conditions',
-                                              style: GoogleFonts.poppins(
-                                                  color: darkBlueColor,
-                                                fontSize: 1.37 * SizeConfig.textMultiplier,
-                                                fontWeight: FontWeight.w500,
-                                                fontStyle: FontStyle.italic
-                                              ),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text:' and ',
-                                                  style: GoogleFonts.poppins(
-                                                    color: darkGreyColor,
-                                                    fontSize: 1.35 * SizeConfig.textMultiplier,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text: 'Privacy Policy',
-                                                      style: GoogleFonts.poppins(
-                                                          color: darkBlueColor,
-                                                          fontSize: 1.37 * SizeConfig.textMultiplier,
-                                                          fontWeight: FontWeight.w500,
-                                                          fontStyle: FontStyle.italic
-                                                      ),
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-
-                                    ],
-
-                                  )
-
-                                ]
-
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
@@ -358,4 +266,5 @@ class _RegisterState extends State<Register> {
     else
       currentUser.phoneNumber='';
   }
+
 }
