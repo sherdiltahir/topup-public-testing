@@ -34,6 +34,8 @@ class _AddProfileState extends State<AddProfile> {
 
   File _image;
 
+  bool _loading = false;
+
   Future<void> getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -47,172 +49,196 @@ class _AddProfileState extends State<AddProfile> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: appBar_withNoTitle(context),
-        body: Form(
-          key: _formKey,
-          child: Container(
-            margin: EdgeInsets.symmetric(
-                vertical: 1.5 * SizeConfig.heightMultiplier,
-                horizontal: 3.5 * SizeConfig.widthMultiplier),
-            child: SingleChildScrollView(
-              child:
-                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    Strings.add_profile_String,
-                    style: GoogleFonts.poppins(
-                        color: darkGreyColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 2.2 * SizeConfig.textMultiplier),
-                  ),
-                ),
-                SizedBox(
-                  height: 2 * SizeConfig.heightMultiplier,
-                ),
-                Center(
-                    child: _image == null
-                        ? GestureDetector(
-                            onTap: getImage,
-                            child: Container(
-                              height: 30 * SizeConfig.heightMultiplier,
-                              width: 30 * SizeConfig.widthMultiplier,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: themeColor),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.white,
-                                    size: 8 * SizeConfig.imageSizeMultiplier,
-                                  ),
-                                  Text(
-                                    'Tap to add photo',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize:
-                                            1.35 * SizeConfig.textMultiplier),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: getImage,
-                            child: ClipOval(
-                              child: CircleAvatar(
-                                backgroundColor: themeColor,
-                                radius: 18 * SizeConfig.imageSizeMultiplier,
-                                child: Image.file(
-                                  _image,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          )
-                    ),
-                SizedBox(
-                  height: 1.5 * SizeConfig.heightMultiplier,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: 3 * SizeConfig.widthMultiplier),
-                    child: Text(
-                      'Fullname',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                          color: darkGreyColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 2 * SizeConfig.textMultiplier),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 1 * SizeConfig.heightMultiplier,
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 3 * SizeConfig.widthMultiplier),
-                  child: TextFormField(
-                    controller: _text,
-                    style: GoogleFonts.poppins(
-                        color: darkGreyColor,
-                        fontSize: 1.8 * SizeConfig.textMultiplier),
-                    validator: (String name) {
-                      if (name == null)
-                        return 'Enter your name';
-                      else
-                        return null;
-                    },
-                    decoration: InputDecoration(
-                        errorText: _validate ? 'Enter your name' : null,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(color: lightGreyColor),
+        body: Builder(builder: (BuildContext currentContext) {
+          return Form(
+            key: _formKey,
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                  vertical: 1.5 * SizeConfig.heightMultiplier,
+                  horizontal: 3.5 * SizeConfig.widthMultiplier),
+              child: SingleChildScrollView(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          Strings.add_profile_String,
+                          style: GoogleFonts.poppins(
+                              color: darkGreyColor,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 2.2 * SizeConfig.textMultiplier),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(color: lightGreyColor),
-                        )),
-                  ),
-                ),
-                    SizedBox(
-                      height: 5 * SizeConfig.heightMultiplier,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        onTap: () async {
-                          if(_text.text.length<2){
-                            setState(() {
-                              _validate=true;
-                            });
-                          }
-                          else{
-                            widget.user.name=_text.text;
-                            if(_image!=null)
-                              widget.user.picture=_image;
-                            widget.user.pictureUri=await StorageService().uploadUserProfile(_image, "User Profile", widget.user.id);
-                            await DatabaseService().setUserData(widget.user);
-                            setState(() {
-                            _validate=false;
-                          });
-                          }
-
-
-
-                          // Navigator.push(context,
-                          //     MaterialPageRoute(builder: (context) =>AddProfile()));
-                        },
-                        child: GestureDetector(
-                          onTap: (){
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) =>Add_Card()));
+                      ),
+                      SizedBox(
+                        height: 2 * SizeConfig.heightMultiplier,
+                      ),
+                      Center(
+                          child: _image == null
+                              ? GestureDetector(
+                                  onTap: getImage,
+                                  child: Container(
+                                    height: 30 * SizeConfig.heightMultiplier,
+                                    width: 30 * SizeConfig.widthMultiplier,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: themeColor),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                          size: 8 *
+                                              SizeConfig.imageSizeMultiplier,
+                                        ),
+                                        Text(
+                                          'Tap to add photo',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 1.35 *
+                                                  SizeConfig.textMultiplier),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: getImage,
+                                  child: ClipOval(
+                                    child: CircleAvatar(
+                                      backgroundColor: themeColor,
+                                      radius:
+                                          18 * SizeConfig.imageSizeMultiplier,
+                                      child: Image.file(
+                                        _image,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                      SizedBox(
+                        height: 1.5 * SizeConfig.heightMultiplier,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 3 * SizeConfig.widthMultiplier),
+                          child: Text(
+                            'Fullname',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                                color: darkGreyColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 2 * SizeConfig.textMultiplier),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1 * SizeConfig.heightMultiplier,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 3 * SizeConfig.widthMultiplier),
+                        child: TextFormField(
+                          controller: _text,
+                          style: GoogleFonts.poppins(
+                              color: darkGreyColor,
+                              fontSize: 1.8 * SizeConfig.textMultiplier),
+                          validator: (String name) {
+                            if (name == null)
+                              return 'Enter your name';
+                            else
+                              return null;
+                          },
+                          decoration: InputDecoration(
+                              errorText: _validate ? 'Enter your name' : null,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                                borderSide: BorderSide(color: lightGreyColor),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                                borderSide: BorderSide(color: lightGreyColor),
+                              )),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5 * SizeConfig.heightMultiplier,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child:_loading?CircularProgressIndicator(
+                          // value: _progress,
+                          valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                        ): GestureDetector(
+                          onTap: () async {
+                            if (_text.text.length < 2) {
+                              setState(() {
+                                _validate = true;
+                              });
+                            } else {
+                              if (_image == null) {
+                                Scaffold.of(currentContext).showSnackBar(
+                                  new SnackBar(
+                                    backgroundColor: Colors.lightGreen,
+                                    content: new Text(
+                                        'Please select A Profile picture'),
+                                  ),
+                                );
+                                return ;
+                              }
+                              else {
+                                setState(() {
+                                  _loading = true;
+                                });
+                                widget.user.name = _text.text;
+                                if (_image != null)
+                                  widget.user.picture = _image;
+                                widget.user.pictureUri = await StorageService()
+                                    .uploadUserProfile(
+                                    _image, "User Profile", widget.user.id);
+                                await DatabaseService().setUserData(
+                                    widget.user);
+                                setState(() {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Add_Card(user: widget.user)));
+                                  _loading = false;
+                                });
+                              }
+                            }
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(builder: (context) =>AddProfile()));
                           },
                           child: Container(
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: themeColor,
                               ),
-                              margin: EdgeInsets.only(right: 3*SizeConfig.widthMultiplier),
+                              margin: EdgeInsets.only(
+                                  right: 3 * SizeConfig.widthMultiplier),
                               child: Icon(
                                 Icons.arrow_forward,
                                 color: Colors.white,
-                                size: 10*SizeConfig.imageSizeMultiplier,
-                              )
-                          ),
+                                size: 10 * SizeConfig.imageSizeMultiplier,
+                              )),
                         ),
-                      ),
-                    )
-              ]),
+                      )
+                    ]),
+              ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
   }

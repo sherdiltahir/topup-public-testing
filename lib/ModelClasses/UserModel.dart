@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:topup/Services/FirebaseAuthService.dart';
 
 import 'CardModel.dart';
 
@@ -18,6 +19,19 @@ class User {
   String securityAnswer1;
   String securityQuestion2;
   String securityAnswer2;
+
+  User(
+      {this.name,
+        this.id,
+        this.phoneNumber,
+        this.cards,
+        this.couponsIds,
+        this.fcmDeviceCode,
+        this.pictureUri,
+        this.securityPin,
+        this.securityQuestion1,
+        this.securityAnswer1});
+
 
   Map<String, dynamic> toMap() {
     return  {
@@ -38,17 +52,6 @@ class User {
     };
   }
 
-  User(
-      {this.name,
-      this.id,
-      this.phoneNumber,
-      this.cards,
-      this.couponsIds,
-      this.fcmDeviceCode,
-      this.pictureUri,
-      this.securityPin,
-      this.securityQuestion1,
-      this.securityAnswer1});
 
   void fromMap(DocumentSnapshot doc) {
     this.name = doc.data['name'] ?? '';

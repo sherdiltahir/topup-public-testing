@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:topup/Services/FirebaseAuthService.dart';
 import 'package:topup/screens/registration/register.dart';
 import 'package:topup/screens/welcome/onboarding.dart';
 import 'package:topup/utils/color.dart';
@@ -13,7 +14,12 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-
+  String userId='';
+  void moveToSignIn() {
+    Navigator.pop(context);
+    // Navigator.push(context, MaterialPageRoute(
+    //     builder:(context)=>HomeScreen()));
+  }
   void MoveToOnboarding() {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(
@@ -24,7 +30,14 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5),MoveToOnboarding);
+    checkAuthentication();
+    Timer(Duration(seconds: 5),userId==''?MoveToOnboarding:moveToSignIn);
+
+  }
+
+  void checkAuthentication() async {
+    var _authService=AuthService();
+    userId=await _authService.currentUserIdFromAuth();
   }
   
   @override

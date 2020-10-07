@@ -14,53 +14,87 @@ class SecurityQuestions extends StatefulWidget {
   final User user;
 
   const SecurityQuestions({Key key, this.user}) : super(key: key);
+
   @override
   _SecurityQuestionsState createState() => _SecurityQuestionsState();
 }
 
 class _SecurityQuestionsState extends State<SecurityQuestions> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
-  bool _validate=false;
+  bool _validate1 = false;
+  bool _validate2 = false;
+  final _text1 = TextEditingController();
+  final _text2 = TextEditingController();
 
   int _questionSelected1;
   int _questionSelected2;
 
   List<DropdownMenuItem<int>> questionList = [];
+  List<String> stringQuestionList = [
+    'What was the name of your first pet?',
+    'What was the name of your first toy?',
+    'What was youngest brother name?'
+  ];
 
   loadQuestions() {
     questionList = [];
-    questionList.add(new DropdownMenuItem(
-      value: 0,
-      child: new Text(
-        'What was the name of your first pet?',
-        textAlign: TextAlign.left,
-        style: GoogleFonts.poppins(
-            color: darkGreyColor,
-            fontWeight: FontWeight.w300,
-            fontSize: 1.6 * SizeConfig.textMultiplier),
-      ),),);
-    questionList.add(new DropdownMenuItem(
-      value: 1,
-      child: new Text(
-        'What was the name of your first toy?',
-        textAlign: TextAlign.left,
-        style: GoogleFonts.poppins(
-            color: darkGreyColor,
-            fontWeight: FontWeight.w300,
-            fontSize: 1.6 * SizeConfig.textMultiplier),
-      ),),);
-    questionList.add(new DropdownMenuItem(
-      value: 2,
-      child: new Text(
-        'What was youngest brother name?',
-        textAlign: TextAlign.left,
-        style: GoogleFonts.poppins(
-            color: darkGreyColor,
-            fontWeight: FontWeight.w300,
-            fontSize: 1.6 * SizeConfig.textMultiplier),
-      ),),);
+    int index = 0;
+    for (var text in stringQuestionList) {
+      questionList.add(
+        new DropdownMenuItem(
+          value: index,
+          child: new Text(
+            text,
+            textAlign: TextAlign.left,
+            style: GoogleFonts.poppins(
+                color: darkGreyColor,
+                fontWeight: FontWeight.w300,
+                fontSize: 1.6 * SizeConfig.textMultiplier),
+          ),
+        ),
+      );
+      index++;
+    }
+    // questionList.add(
+    //   new DropdownMenuItem(
+    //     value: 0,
+    //     child: new Text(
+    //       'What was the name of your first pet?',
+    //       textAlign: TextAlign.left,
+    //       style: GoogleFonts.poppins(
+    //           color: darkGreyColor,
+    //           fontWeight: FontWeight.w300,
+    //           fontSize: 1.6 * SizeConfig.textMultiplier),
+    //     ),
+    //   ),
+    // );
+    // questionList.add(
+    //   new DropdownMenuItem(
+    //     value: 1,
+    //     child: new Text(
+    //       'What was the name of your first toy?',
+    //       textAlign: TextAlign.left,
+    //       style: GoogleFonts.poppins(
+    //           color: darkGreyColor,
+    //           fontWeight: FontWeight.w300,
+    //           fontSize: 1.6 * SizeConfig.textMultiplier),
+    //     ),
+    //   ),
+    // );
+    // questionList.add(
+    //   new DropdownMenuItem(
+    //     value: 2,
+    //     child: new Text(
+    //       'What was youngest brother name?',
+    //       textAlign: TextAlign.left,
+    //       style: GoogleFonts.poppins(
+    //           color: darkGreyColor,
+    //           fontWeight: FontWeight.w300,
+    //           fontSize: 1.6 * SizeConfig.textMultiplier),
+    //     ),
+    //   ),
+    // );
   }
 
   @override
@@ -73,10 +107,10 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: appBar_withNoTitle(context),
-
-          body: Form(
+        backgroundColor: Colors.white,
+        appBar: appBar_withNoTitle(context),
+        body: Builder(builder: (BuildContext currentContext) {
+          return Form(
             key: _formKey,
             child: Container(
               margin: EdgeInsets.symmetric(
@@ -125,7 +159,8 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        margin: EdgeInsets.only(left: 3*SizeConfig.widthMultiplier),
+                        margin: EdgeInsets.only(
+                            left: 3 * SizeConfig.widthMultiplier),
                         child: Text(
                           'Question 1',
                           textAlign: TextAlign.center,
@@ -142,19 +177,19 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal:  3 * SizeConfig.widthMultiplier),
-                        child: DropdownButtonFormField(
-                          dropdownColor: Colors.white,
-                          items: questionList,
-                          value: _questionSelected1,
-                          onChanged: (value){
-                            setState(() {
-                              _questionSelected1 = value;
-                            });
-                          },
-                          isExpanded: true,
-                        )
-                      ),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 3 * SizeConfig.widthMultiplier),
+                          child: DropdownButtonFormField(
+                            dropdownColor: Colors.white,
+                            items: questionList,
+                            value: _questionSelected1,
+                            onChanged: (value) {
+                              setState(() {
+                                _questionSelected1 = value;
+                              });
+                            },
+                            isExpanded: true,
+                          )),
                     ),
                     SizedBox(
                       height: 1 * SizeConfig.heightMultiplier,
@@ -165,23 +200,26 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                           horizontal: 3 * SizeConfig.widthMultiplier),
                       child: TextFormField(
                         maxLines: 1,
+                        controller: _text1,
                         style: GoogleFonts.poppins(
                             color: darkGreyColor,
                             fontSize: 1.8 * SizeConfig.textMultiplier),
                         validator: (String name) {
                           if (name == null)
-                            return 'Enter your answer';
+                            return 'Enter your 1st answer';
                           else
                             return null;
                         },
                         decoration: InputDecoration(
-                            errorText: _validate ? 'Enter your answer' : null,
+                            errorText: _validate1 ? 'Enter your  answer' : null,
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: lightGreyColor),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: lightGreyColor),
                             )),
                       ),
@@ -192,7 +230,8 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal:  3 * SizeConfig.widthMultiplier),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 3 * SizeConfig.widthMultiplier),
                         child: Text(
                           'Question 2',
                           textAlign: TextAlign.center,
@@ -209,19 +248,20 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                          margin: EdgeInsets.only(left: 3*SizeConfig.widthMultiplier,right: 3*SizeConfig.widthMultiplier),
+                          margin: EdgeInsets.only(
+                              left: 3 * SizeConfig.widthMultiplier,
+                              right: 3 * SizeConfig.widthMultiplier),
                           child: DropdownButtonFormField(
                             dropdownColor: Colors.white,
                             items: questionList,
                             value: _questionSelected2,
-                            onChanged: (value){
+                            onChanged: (value) {
                               setState(() {
                                 _questionSelected2 = value;
                               });
                             },
                             isExpanded: true,
-                          )
-                      ),
+                          )),
                     ),
                     SizedBox(
                       height: 1 * SizeConfig.heightMultiplier,
@@ -232,6 +272,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                           horizontal: 3 * SizeConfig.widthMultiplier),
                       child: TextFormField(
                         maxLines: 1,
+                        controller: _text2,
                         style: GoogleFonts.poppins(
                             color: darkGreyColor,
                             fontSize: 1.8 * SizeConfig.textMultiplier),
@@ -242,13 +283,15 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                             return null;
                         },
                         decoration: InputDecoration(
-                            errorText: _validate ? 'Enter your answer' : null,
+                            errorText: _validate2 ? 'Enter your answer' : null,
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: lightGreyColor),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: lightGreyColor),
                             )),
                       ),
@@ -259,30 +302,94 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) =>AddProfile(user: widget.user)));
+                        onTap: () {
+                          if (_questionSelected1 == null) {
+                            Scaffold.of(currentContext).showSnackBar(
+                              new SnackBar(
+                                backgroundColor: Colors.lightGreen,
+                                content: new Text('Please select 1st question'),
+                              ),
+                            );
+                          } else if (_questionSelected2 == null) {
+                            Scaffold.of(currentContext).showSnackBar(
+                              new SnackBar(
+                                backgroundColor: Colors.lightGreen,
+                                content: new Text('Please select 2nd Question'),
+                              ),
+                            );
+                          } else if (_questionSelected2 == _questionSelected1) {
+                            Scaffold.of(currentContext).showSnackBar(
+                              new SnackBar(
+                                backgroundColor: Colors.lightGreen,
+                                content: new Text(
+                                    'Please select Different Questions'),
+                              ),
+                            );
+                          } else if (_questionSelected2 == _questionSelected1) {
+                            Scaffold.of(currentContext).showSnackBar(
+                              new SnackBar(
+                                backgroundColor: Colors.lightGreen,
+                                content: new Text(
+                                    'Please select Different Questions'),
+                              ),
+                            );
+                          } else {
+                            if (_text1.text == '') {
+                              setState(() {
+                                _validate1 = true;
+                              });
+                              return;
+                            } else {
+                              _validate1 = false;
+                            }
+                            if (_text2.text == '') {
+                              setState(() {
+                                _validate2 = true;
+                              });
+                              return;
+                            } else {
+                              setState(() {
+                                _validate2 = false;
+                              });
+                            }
+                            widget.user.securityQuestion1 =
+                                stringQuestionList[_questionSelected1];
+                            widget.user.securityQuestion2 =
+                                stringQuestionList[_questionSelected2];
+                            widget.user.securityAnswer1 = _text1.text;
+                            widget.user.securityAnswer2 = _text2.text;
+                            setState(() {
+                              _validate1 = false;
+                              _validate2 = false;
+                            });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AddProfile(user: widget.user)));
+                          }
                         },
                         child: Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: themeColor,
                             ),
-                            margin: EdgeInsets.only(right: 3*SizeConfig.widthMultiplier),
+                            margin: EdgeInsets.only(
+                                right: 3 * SizeConfig.widthMultiplier),
                             child: Icon(
                               Icons.arrow_forward,
                               color: Colors.white,
-                              size: 10*SizeConfig.imageSizeMultiplier,
-                            )
-                        ),
+                              size: 10 * SizeConfig.imageSizeMultiplier,
+                            )),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        }),
+      ),
     );
   }
 }

@@ -3,15 +3,21 @@ import 'package:credit_card_input_form/credit_card_input_form.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topup/ModelClasses/CardModel.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
+import 'package:topup/Services/FirebaseDatabaseService.dart';
 import 'package:topup/screens/registration/add_profile.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/custom_widgets/app_bars.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
+import 'package:uuid/uuid.dart';
 
 class Add_Card extends StatefulWidget {
+  final User user;
+
+  const Add_Card({Key key, this.user}) : super(key: key);
   @override
   _Add_CardState createState() => _Add_CardState();
 }
@@ -110,6 +116,15 @@ class _Add_CardState extends State<Add_Card> {
                   onStateChange: (currentState, cardInfo) {
                     print(currentState);
                     print(cardInfo);
+                    if(currentState.index==4&&cardInfo.cvv!=""&&cardInfo.cardNumber!=''&&cardInfo.name!=''&&cardInfo.cvv!=''){
+                      BankCard card=BankCard(cardNumber: cardInfo.cardNumber,cardName: cardInfo.name,
+                          cardKey: cardInfo.cvv,cardId: Uuid().v4(),cardExpiry: cardInfo.validate);
+                      if(widget.user.cards==null)
+                        widget.user.cards=new List();
+                      widget.user.cards.add(card);
+                      DatabaseService().setUserData(widget.user);
+
+                    }
                   },
                   customCaptions: customCaptions,
                   frontCardDecoration: cardDecoration,
