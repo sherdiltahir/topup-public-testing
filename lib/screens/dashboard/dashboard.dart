@@ -85,17 +85,11 @@ class _DashboardState extends State<Dashboard> {
             snakeColor: Colors.white,
             selectedItemColor: darkGreyColor,
             items: [
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(home_Icon,height: 2.5*SizeConfig.heightMultiplier,width: 2.5*SizeConfig.widthMultiplier), title: Text("")),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(coupon_Icon,height: 2.5*SizeConfig.heightMultiplier,width: 2.5*SizeConfig.widthMultiplier), title: Text("")),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(qrCode_Icon,height: 4.0*SizeConfig.heightMultiplier,width: 4.0*SizeConfig.widthMultiplier), title: Text("")),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(coin_Icon,height: 2.5*SizeConfig.heightMultiplier,width: 2.5*SizeConfig.widthMultiplier), title: Text("")),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(settings_Icon,height: 2.5*SizeConfig.heightMultiplier,width: 2.5*SizeConfig.widthMultiplier), title: Text("")),
-
+              BarItem(home_Icon,3.0),
+              BarItem(coupon_Icon,3.0),
+              BarItem(qrCode_Icon,4.0),
+              BarItem(coin_Icon,3.0),
+              BarItem(settings_Icon,3.0),
             ],
 
           ),
@@ -103,4 +97,10 @@ class _DashboardState extends State<Dashboard> {
       ),
     );
   }
+
+  BottomNavigationBarItem BarItem(String Icon , double size){
+    return BottomNavigationBarItem(
+        icon: SvgPicture.asset(Icon,height: size*SizeConfig.heightMultiplier,width: size*SizeConfig.widthMultiplier), title: Text(""));
+  }
+
 }

@@ -112,6 +112,7 @@ AppBar dashboardAppbar_Home(BuildContext context, String title) {
     backgroundColor: themeColor,
     actions: [
       IconButton(
+        onPressed: (){},
         icon: Icon(
           Icons.notifications,
           color: Colors.white,
@@ -144,6 +145,7 @@ Widget dashboardAppBar_home(BuildContext context, String title) {
             child: Container(
                 alignment: Alignment.centerRight,
                 child: IconButton(
+                  onPressed: (){},
                   icon: Icon(
                     Icons.notifications,
                     color: Colors.white,
@@ -189,6 +191,7 @@ Widget dashboardAppBar_settings(BuildContext context, String title) {
             child: Container(
                 alignment: Alignment.centerRight,
                 child: IconButton(
+                  onPressed: (){},
                   icon: Icon(
                     Icons.notifications,
                     color: Colors.white,
