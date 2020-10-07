@@ -24,7 +24,7 @@ class AuthService {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
-  Future<void> verifyPhone(String userPhoneNumber, Function goToNextScreen,
+  Future<void> verifyPhone(String userPhoneNumber,
       Function smsUIUpdate, Function updateUser) async {
     final PhoneVerificationCompleted verified =
         (AuthCredential authResult) async {

@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/Services/FirebaseAuthService.dart';
 import 'package:topup/Services/FirebaseDatabaseService.dart';
+import 'package:topup/screens/dashboard/dashboard.dart';
 import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/screens/registration/re_enter_pin.dart';
 import 'package:topup/screens/registration/security_questions.dart';
@@ -20,7 +21,7 @@ class VerifyPhone extends StatefulWidget {
   final User user;
   final bool register;
 
-  VerifyPhone({@required this.user,@required this.register});
+  VerifyPhone({@required this.user, @required this.register});
 
   @override
   _VerifyPhoneState createState() => _VerifyPhoneState();
@@ -35,7 +36,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
     // TODO: implement initState
     super.initState();
     _auth.verifyPhone(
-        widget.user.phoneNumber, goToNextScreen, smsUIUpdate, updateUser);
+        widget.user.phoneNumber,smsUIUpdate, updateUser);
     //startTimer();
   }
 
@@ -49,8 +50,6 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   bool _error = false;
   bool timer = true;
   bool _phone_verified = true;
-
-
 
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
@@ -86,14 +85,32 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   void updateUser(String userId) async {
     widget.user.id = userId;
     print('we are at update user ');
-    await databaseService.setUserData(widget.user);
+    if (widget.register) await databaseService.setUserData(widget.user);
     goToNextScreen();
   }
 
   void goToNextScreen() {
     print('We are clear to sign in Hello wrold');
+    if (widget.register)
+      goToCreatePinScreen();
+    else
+      goToHomeScreenScreen();
+  }
+
+  void goToCreatePinScreen() {
+    print('We are clear to sign up Hello world');
+    _phone_verified = true;
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => CreatePin(user: widget.user)));
+  }
+
+  void goToHomeScreenScreen() {
+    print('We are clear to sign in Hello world');
+    databaseService.getCurrentUserData(widget.user).listen((event) {
+      _phone_verified = true;
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => Dashboard()));
+    });
   }
 
   @override
@@ -182,53 +199,55 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                     ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: timer==true? Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      Strings.request_new_code_String,
-                      style: GoogleFonts.poppins(
-                          color: darkGreyColor,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 1.45 * SizeConfig.textMultiplier),
-                    ),
-                    Text(
-                      "$_start sec",
-                      style: GoogleFonts.poppins(
-                          color: darkGreyColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 1.7 * SizeConfig.textMultiplier),
-                    )
-
-                  ],
-
-              ): Align(
-                  alignment: Alignment.center,
-                child: MaterialButton(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 1.5 * SizeConfig.heightMultiplier,
-                        horizontal: 30 * SizeConfig.widthMultiplier),
-                    color: themeColor,
-                    elevation: 4.0,
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder:(context)=> SecurityQuestions()));
-                      setState(() {
-                        _auth.verifyPhone(widget.user.phoneNumber,
-                            goToNextScreen, smsUIUpdate, updateUser);
-                      });
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                    child: Text(
-                      "Resend code",
-                      style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 2.1 * SizeConfig.textMultiplier,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-              ),
+                child: timer == true
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            Strings.request_new_code_String,
+                            style: GoogleFonts.poppins(
+                                color: darkGreyColor,
+                                fontWeight: FontWeight.w300,
+                                fontSize: 1.45 * SizeConfig.textMultiplier),
+                          ),
+                          Text(
+                            "$_start sec",
+                            style: GoogleFonts.poppins(
+                                color: darkGreyColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 1.7 * SizeConfig.textMultiplier),
+                          )
+                        ],
+                      )
+                    : Align(
+                        alignment: Alignment.center,
+                        child: MaterialButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.5 * SizeConfig.heightMultiplier,
+                              horizontal: 30 * SizeConfig.widthMultiplier),
+                          color: themeColor,
+                          elevation: 4.0,
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SecurityQuestions()));
+                            setState(() {
+                              _auth.verifyPhone(widget.user.phoneNumber, smsUIUpdate, updateUser);
+                            });
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0))),
+                          child: Text(
+                            "Resend code",
+                            style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 2.1 * SizeConfig.textMultiplier,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
               ),
               SizedBox(
                 height: 2.5 * SizeConfig.heightMultiplier,
@@ -253,7 +272,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                 onNumberSelected: (value) async {
                   print(value);
                   setState(() async {
-                    _error=false;
+                    _error = false;
 
                     if (value != -1) {
                       if (_code.length < 6) {
@@ -262,27 +281,28 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                     } else {
                       _code = _code.substring(0, _code.length - 1);
                     }
-                    if (_code.length==6 ) {
-                      _phone_verified=false;
-                      if (!await _auth.signInWithPhoneNumber(null, _code, updateUser)) {
+                    if (_code.length == 6) {
+                      _phone_verified = false;
+                      if (!await _auth.signInWithPhoneNumber(
+                          null, _code, updateUser)) {
                         _error = true;
                       }
                     }
-                    _phone_verified=true;
+                    _phone_verified = true;
                   });
                 },
               ),
               SizedBox(
                 height: 3 * SizeConfig.heightMultiplier,
               ),
-              _phone_verified==false?CircularProgressIndicator(
-               // value: _progress,
-                valueColor: AlwaysStoppedAnimation<Color>(themeColor),
-              ) :
-              SizedBox(
-                height: 1 * SizeConfig.heightMultiplier,
-              ),
-
+              _phone_verified == false
+                  ? CircularProgressIndicator(
+                      // value: _progress,
+                      valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                    )
+                  : SizedBox(
+                      height: 1 * SizeConfig.heightMultiplier,
+                    ),
             ],
           ),
         ),

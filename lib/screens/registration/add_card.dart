@@ -123,7 +123,7 @@ class _Add_CardState extends State<Add_Card> {
                         widget.user.cards=new List();
                       widget.user.cards.add(card);
                       DatabaseService().setUserData(widget.user);
-
+                    //  TODO: Move User to Dashboard Screen
                     }
                   },
                   customCaptions: customCaptions,
@@ -143,7 +143,9 @@ class _Add_CardState extends State<Add_Card> {
             ),
             Center(
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  //  TODO: Move User to Dashboard Screen
+                },
                 child: Text(
                   'Skip',
                   textAlign: TextAlign.center,

@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/dashboard/dashboard.dart';
-import 'package:topup/screens/dashboard/home.dart';
-import 'package:topup/screens/login/login.dart';
-import 'package:topup/screens/registration/phone_verify.dart';
-import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/screens/registration/register.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/custom_widgets/app_bars.dart';
@@ -138,7 +133,6 @@ class _LoginState extends State<Login> {
                     color: themeColor,
                     elevation: 4.0,
                     onPressed: () {
-
                       Navigator.push(context, MaterialPageRoute(
                           builder:(context)=>Dashboard()//VerifyPhone(user: currentUser,register: false)
                       ));
