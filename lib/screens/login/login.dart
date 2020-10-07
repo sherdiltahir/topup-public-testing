@@ -27,6 +27,7 @@ class _LoginState extends State<Login> {
   final _text = TextEditingController();
   User currentUser=new User();
   bool _validate=false;
+  String _phone_number = null;
 
   @override
   Widget build(BuildContext context) {
