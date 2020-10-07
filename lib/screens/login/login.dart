@@ -3,6 +3,8 @@ import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
+import 'package:topup/screens/dashboard/dashboard.dart';
+import 'package:topup/screens/dashboard/home.dart';
 import 'package:topup/screens/login/login.dart';
 import 'package:topup/screens/registration/phone_verify.dart';
 import 'package:topup/screens/registration/pin.dart';
@@ -136,18 +138,23 @@ class _LoginState extends State<Login> {
                     color: themeColor,
                     elevation: 4.0,
                     onPressed: () {
-                      if(_formKey.currentState.validate()){
-                        _formKey.currentState.save();
-                        Navigator.pop(context);
-                        Navigator.push(context, MaterialPageRoute(
-                            builder:(context)=>VerifyPhone(user: currentUser,register: false)
-                        ));
 
-                      }else{
-                        setState(() {
-                          _autoValidate = true;
-                        });
-                      }
+                      Navigator.push(context, MaterialPageRoute(
+                          builder:(context)=>Dashboard()//VerifyPhone(user: currentUser,register: false)
+                      ));
+
+                      // if(_formKey.currentState.validate()){
+                      //   _formKey.currentState.save();
+                      //   Navigator.pop(context);
+                      //   Navigator.push(context, MaterialPageRoute(
+                      //       builder:(context)=>Home()//VerifyPhone(user: currentUser,register: false)
+                      //   ));
+                      //
+                      // }else{
+                      //   setState(() {
+                      //     _autoValidate = true;
+                      //   });
+                      // }
                       //Navigator.pop(context);
                     },
                     shape: RoundedRectangleBorder(

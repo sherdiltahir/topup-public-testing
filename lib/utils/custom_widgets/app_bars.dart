@@ -16,7 +16,7 @@ return AppBar(
     icon:Icon(
       Icons.arrow_back_ios,
       color: darkGreyColor,
-      size: 4 * SizeConfig.imageSizeMultiplier,
+      size: 5 * SizeConfig.imageSizeMultiplier,
     ),
   )
 );
@@ -38,7 +38,7 @@ Widget appBar_withHelp(BuildContext context, String title){
               icon:Icon(
                 Icons.arrow_back_ios,
                 color: darkGreyColor,
-                size: 4 * SizeConfig.imageSizeMultiplier,
+                size: 5 * SizeConfig.imageSizeMultiplier,
               ),
             ),
             Text(
@@ -51,8 +51,7 @@ Widget appBar_withHelp(BuildContext context, String title){
             Expanded(
               child: Container(
                 alignment: Alignment.centerRight,
-                margin: EdgeInsets.fromLTRB(
-                    0, 0, 2.0 * SizeConfig.widthMultiplier, 0),
+                margin: EdgeInsets.only(right: 1.0*SizeConfig.widthMultiplier),
                 child: GestureDetector(
                   onTap: () {},
                   child: Text(
@@ -96,6 +95,42 @@ Widget appBar_withTitle(BuildContext context, String title){
                 fontWeight: FontWeight.w400,
                 fontSize: 2.2 * SizeConfig.textMultiplier),
           ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget dashboardAppBar_home(BuildContext context,String title){
+  return PreferredSize(
+    preferredSize: AppBar().preferredSize,
+    child: Container(
+      color: themeColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: 2*SizeConfig.widthMultiplier),
+            child: Text(
+              title,
+              style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 2.2 * SizeConfig.textMultiplier),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                icon: Icon(
+                    Icons.notifications,
+                  color: Colors.white,
+                  size: 6.5 * SizeConfig.imageSizeMultiplier,
+                ),
+              )
+            ),
+          )
         ],
       ),
     ),

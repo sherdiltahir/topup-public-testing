@@ -28,21 +28,6 @@ class _ReEnterPinState extends State<ReEnterPin> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar_withNoTitle(context),
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      //   leading: GestureDetector(
-      //     onTap: (){
-      //
-      //     },
-      //     child: Icon(
-      //       Icons.arrow_back_ios,
-      //       color: darkGreyColor,
-      //       size: 4 * SizeConfig.imageSizeMultiplier,
-      //     ),
-      //   ),
-      //
-      // ),
       body: Container(
         margin: EdgeInsets.symmetric(
             vertical: 2 * SizeConfig.heightMultiplier,
