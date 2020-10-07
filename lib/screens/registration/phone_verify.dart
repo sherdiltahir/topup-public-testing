@@ -35,8 +35,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _auth.verifyPhone(
-        widget.user.phoneNumber,smsUIUpdate, updateUser);
+    _auth.verifyPhone(widget.user.phoneNumber, smsUIUpdate, updateUser);
     //startTimer();
   }
 
@@ -85,31 +84,31 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   void updateUser(String userId) async {
     widget.user.id = userId;
     print('we are at update user ');
-    if (widget.register) await databaseService.setUserData(widget.user);
     goToNextScreen();
-  }
-
-  void goToNextScreen() {
-    print('We are clear to sign in Hello wrold');
-    if (widget.register)
-      goToCreatePinScreen();
-    else
-      goToHomeScreenScreen();
   }
 
   void goToCreatePinScreen() {
     print('We are clear to sign up Hello world');
-    _phone_verified = true;
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => CreatePin(user: widget.user)));
   }
 
-  void goToHomeScreenScreen() {
-    print('We are clear to sign in Hello world');
-    databaseService.getCurrentUserData(widget.user).listen((event) {
-      _phone_verified = true;
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => Dashboard()));
+  void goToNextScreen() {
+    StreamSubscription subscription;
+    subscription =
+        databaseService.getCurrentUserData(widget.user).listen((event) async {
+      subscription.cancel();
+      if (event == null) {
+        goToCreatePinScreen();
+        await databaseService.setUserData(widget.user);
+      } else {
+        print('We are clear to sign in Hello world');
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Dashboard()));
+      }
+      setState(() {
+        _phone_verified = true;
+      });
     });
   }
 
@@ -233,7 +232,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                 MaterialPageRoute(
                                     builder: (context) => SecurityQuestions()));
                             setState(() {
-                              _auth.verifyPhone(widget.user.phoneNumber, smsUIUpdate, updateUser);
+                              _auth.verifyPhone(widget.user.phoneNumber,
+                                  smsUIUpdate, updateUser);
                             });
                           },
                           shape: RoundedRectangleBorder(
@@ -270,10 +270,12 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               // ),
               NumericPad(
                 onNumberSelected: (value) async {
-                  print(value);
-                  setState(() async {
-                    _error = false;
+                  if (_error)
+                    setState(() {
+                      _error = false;
+                    });
 
+                  setState(() {
                     if (value != -1) {
                       if (_code.length < 6) {
                         _code = _code + value.toString();
@@ -281,15 +283,13 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                     } else {
                       _code = _code.substring(0, _code.length - 1);
                     }
-                    if (_code.length == 6) {
-                      _phone_verified = false;
-                      if (!await _auth.signInWithPhoneNumber(
-                          null, _code, updateUser)) {
-                        _error = true;
-                      }
-                    }
-                    _phone_verified = true;
                   });
+                  if (_code.length == 6) {
+                    setState(() {
+                      _phone_verified = false;
+                    });
+                    setLoading();
+                  }
                 },
               ),
               SizedBox(
@@ -343,5 +343,13 @@ class _VerifyPhoneState extends State<VerifyPhone> {
         ),
       ),
     );
+  }
+
+  Future<void> setLoading() async {
+    if (!await _auth.signInWithPhoneNumber(null, _code, updateUser)) {
+      setState(() {
+        _error = true;
+      });
+    }
   }
 }
