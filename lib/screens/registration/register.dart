@@ -9,6 +9,7 @@ import 'package:topup/screens/login/login.dart';
 import 'package:topup/screens/registration/phone_verify.dart';
 import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/utils/color.dart';
+import 'package:topup/utils/custom_widgets/app_bars.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
@@ -34,43 +35,7 @@ class _RegisterState extends State<Register> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: GestureDetector(
-            onTap: () {},
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: darkGreyColor,
-              size: 4 * SizeConfig.imageSizeMultiplier,
-            ),
-          ),
-          actions: [
-            Center(
-              child: Container(
-                margin: EdgeInsets.fromLTRB(
-                    0, 0, 2.0 * SizeConfig.widthMultiplier, 0),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    Strings.need_help_String,
-                    style: GoogleFonts.poppins(
-                        color: themeColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 2.2 * SizeConfig.textMultiplier),
-                  ),
-                ),
-              ),
-            )
-          ],
-          title: Text(
-            "Register",
-            style: GoogleFonts.poppins(
-                color: darkGreyColor,
-                fontWeight: FontWeight.w400,
-                fontSize: 2.2 * SizeConfig.textMultiplier),
-          ),
-        ),
+        appBar: appBar_withHelp(context,"Register"),
         body: Form(
           key: _formKey,
           autovalidate: _autoValidate,
@@ -148,8 +113,10 @@ class _RegisterState extends State<Register> {
                                     color: darkGreyColor,
                                     fontSize: 2.0 * SizeConfig.textMultiplier),
                                 validator: (String phone_number){
-                                  if(phone_number!=10)
-                                    return 'Enter a valid phone number';
+                                 if(phone_number==null)
+                                    return 'Enter your phone number';
+                                 else if(phone_number.length!=10)
+                                   return 'Enter a valid phone number';
                                   else
                                     return null;
                                 },
@@ -178,7 +145,6 @@ class _RegisterState extends State<Register> {
                     onPressed: () {
                       if(_formKey.currentState.validate()){
                         _formKey.currentState.save();
-                        Navigator.pop(context);
                         Navigator.push(context, MaterialPageRoute(
                             builder:(context)=>VerifyPhone(user: currentUser,register: true)
                         ));

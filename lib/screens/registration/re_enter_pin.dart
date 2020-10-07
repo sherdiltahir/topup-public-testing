@@ -5,6 +5,7 @@ import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/screens/registration/security_questions.dart';
 import 'package:topup/utils/color.dart';
+import 'package:topup/utils/custom_widgets/app_bars.dart';
 import 'package:topup/utils/custom_widgets/numeric_pad.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
@@ -26,21 +27,22 @@ class _ReEnterPinState extends State<ReEnterPin> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: GestureDetector(
-          onTap: (){
-
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: darkGreyColor,
-            size: 4 * SizeConfig.imageSizeMultiplier,
-          ),
-        ),
-
-      ),
+      appBar: appBar_withNoTitle(context),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      //   leading: GestureDetector(
+      //     onTap: (){
+      //
+      //     },
+      //     child: Icon(
+      //       Icons.arrow_back_ios,
+      //       color: darkGreyColor,
+      //       size: 4 * SizeConfig.imageSizeMultiplier,
+      //     ),
+      //   ),
+      //
+      // ),
       body: Container(
         margin: EdgeInsets.symmetric(
             vertical: 2 * SizeConfig.heightMultiplier,

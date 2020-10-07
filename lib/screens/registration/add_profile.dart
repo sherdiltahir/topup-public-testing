@@ -10,6 +10,7 @@ import 'package:topup/Services/FirebaseDatabaseService.dart';
 import 'package:topup/Services/FirebaseStorageService.dart';
 import 'package:topup/screens/registration/add_card.dart';
 import 'package:topup/utils/color.dart';
+import 'package:topup/utils/custom_widgets/app_bars.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
@@ -24,6 +25,9 @@ class AddProfile extends StatefulWidget {
 }
 
 class _AddProfileState extends State<AddProfile> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
+
   final _text = TextEditingController();
 
   bool _validate = false;
@@ -42,19 +46,9 @@ class _AddProfileState extends State<AddProfile> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: GestureDetector(
-            onTap: () {},
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: darkGreyColor,
-              size: 4 * SizeConfig.imageSizeMultiplier,
-            ),
-          ),
-        ),
+        appBar: appBar_withNoTitle(context),
         body: Form(
+          key: _formKey,
           child: Container(
             margin: EdgeInsets.symmetric(
                 vertical: 1.5 * SizeConfig.heightMultiplier,
@@ -148,7 +142,7 @@ class _AddProfileState extends State<AddProfile> {
                     controller: _text,
                     style: GoogleFonts.poppins(
                         color: darkGreyColor,
-                        fontSize: 2.0 * SizeConfig.textMultiplier),
+                        fontSize: 1.8 * SizeConfig.textMultiplier),
                     validator: (String name) {
                       if (name == null)
                         return 'Enter your name';
@@ -159,11 +153,11 @@ class _AddProfileState extends State<AddProfile> {
                         errorText: _validate ? 'Enter your name' : null,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(color: greyBorderColor),
+                          borderSide: BorderSide(color: lightGreyColor),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(color: greyBorderColor),
+                          borderSide: BorderSide(color: lightGreyColor),
                         )),
                   ),
                 ),

@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/add_profile.dart';
 import 'package:topup/utils/color.dart';
+import 'package:topup/utils/custom_widgets/app_bars.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
@@ -30,10 +31,9 @@ class _Add_CardState extends State<Add_Card> {
   };
 
   final buttonStyle2 = BoxDecoration(
-      color: themeColor,
-      borderRadius: BorderRadius.circular(10.0),
-
-      );
+    color: themeColor,
+    borderRadius: BorderRadius.circular(10.0),
+  );
 
   final buttonStyle = BoxDecoration(
     color: themeColor,
@@ -65,100 +65,81 @@ class _Add_CardState extends State<Add_Card> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: GestureDetector(
-            onTap: () {},
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: darkGreyColor,
-              size: 4 * SizeConfig.imageSizeMultiplier,
+        appBar: appBar_withNoTitle(context),
+        body: SingleChildScrollView(
+          child:
+              Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Container(
+              margin: EdgeInsets.symmetric(
+                  vertical: 1.5 * SizeConfig.heightMultiplier,
+                  horizontal: 3.5 * SizeConfig.widthMultiplier),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                Strings.add_card_String,
+                style: GoogleFonts.poppins(
+                    color: darkGreyColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 2.2 * SizeConfig.textMultiplier),
+              ),
             ),
-          ),
-        ),
-        body: Form(
-          child: Container(
-            margin: EdgeInsets.symmetric(
-              vertical: 1.5 * SizeConfig.heightMultiplier,
+            SizedBox(
+              height: 1 * SizeConfig.heightMultiplier,
             ),
-            child: SingleChildScrollView(
-              child:
-                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 3.5 * SizeConfig.widthMultiplier),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    Strings.add_card_String,
-                    style: GoogleFonts.poppins(
-                        color: darkGreyColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 2.2 * SizeConfig.textMultiplier),
-                  ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: 3.5 * SizeConfig.widthMultiplier),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                Strings.add_card_details_String,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.poppins(
+                    color: darkGreyColor,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 1.6 * SizeConfig.textMultiplier),
+              ),
+            ),
+            SizedBox(
+              height: 3 * SizeConfig.heightMultiplier,
+            ),
+            AnimatedContainer(
+              duration: Duration(seconds: 2),
+              child: Stack(children: [
+                CreditCardInputForm(
+                  cardHeight: 32 * SizeConfig.heightMultiplier,
+                  showResetButton: true,
+                  onStateChange: (currentState, cardInfo) {
+                    print(currentState);
+                    print(cardInfo);
+                  },
+                  customCaptions: customCaptions,
+                  frontCardDecoration: cardDecoration,
+                  backCardDecoration: cardDecoration,
+                  nextButtonDecoration: buttonStyle,
+                  prevButtonDecoration: buttonStyle,
+                  resetButtonDecoration: buttonStyle,
+                  // prevButtonTextStyle: buttonTextStyle,
+                  // nextButtonTextStyle: buttonTextStyle,
+                  // resetButtonTextStyle: buttonTextStyle,
                 ),
-                SizedBox(
-                  height: 1 * SizeConfig.heightMultiplier,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 3.5 * SizeConfig.widthMultiplier),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    Strings.add_card_details_String,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                        color: darkGreyColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 1.6 * SizeConfig.textMultiplier),
-                  ),
-                ),
-                SizedBox(
-                  height: 3 * SizeConfig.heightMultiplier,
-                ),
-                Center(
-                  child: AnimatedContainer(
-                    duration: Duration(seconds: 2),
-                    child: Stack(children: [
-                      CreditCardInputForm(
-
-                        showResetButton: true,
-                        onStateChange: (currentState, cardInfo) {
-                          print(currentState);
-                          print(cardInfo);
-                        },
-                        customCaptions: customCaptions,
-                        frontCardDecoration: cardDecoration,
-                        backCardDecoration: cardDecoration,
-                        nextButtonDecoration: buttonStyle,
-                        prevButtonDecoration: buttonStyle,
-                        resetButtonDecoration: buttonStyle,
-                        // prevButtonTextStyle: buttonTextStyle,
-                        // nextButtonTextStyle: buttonTextStyle,
-                        // resetButtonTextStyle: buttonTextStyle,
-                      ),
-                    ]),
-                  ),
-                ),
-                SizedBox(
-                  height: 12 * SizeConfig.heightMultiplier,
-                ),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      'Skip',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                          color: blueColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 2.8 * SizeConfig.textMultiplier),
-                    ),
-                  ),
-                )
               ]),
             ),
-          ),
+            SizedBox(
+              height: 6 * SizeConfig.heightMultiplier,
+            ),
+            Center(
+              child: GestureDetector(
+                onTap: () {},
+                child: Text(
+                  'Skip',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      color: blueColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 2.8 * SizeConfig.textMultiplier),
+                ),
+              ),
+            )
+          ]),
         ),
       ),
     );

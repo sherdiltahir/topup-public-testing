@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/re_enter_pin.dart';
 import 'package:topup/utils/color.dart';
+import 'package:topup/utils/custom_widgets/app_bars.dart';
 import 'package:topup/utils/custom_widgets/numeric_pad.dart';
 import 'package:topup/utils/custom_widgets/pin_circles.dart';
 import 'package:topup/utils/images.dart';
@@ -27,21 +28,22 @@ class _CreatePinState extends State<CreatePin> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: GestureDetector(
-          onTap: (){
-
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: darkGreyColor,
-            size: 4 * SizeConfig.imageSizeMultiplier,
-          ),
-        ),
-
-      ),
+      appBar: appBar_withNoTitle(context),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      //   leading: GestureDetector(
+      //     onTap: (){
+      //
+      //     },
+      //     child: Icon(
+      //       Icons.arrow_back_ios,
+      //       color: darkGreyColor,
+      //       size: 4 * SizeConfig.imageSizeMultiplier,
+      //     ),
+      //   ),
+      //
+      // ),
       body: Container(
         margin: EdgeInsets.symmetric(
             vertical: 2 * SizeConfig.heightMultiplier,
