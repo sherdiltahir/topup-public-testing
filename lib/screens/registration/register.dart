@@ -159,7 +159,7 @@ class _RegisterState extends State<Register> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(12.0))),
                     child: Text(
-                      "Login",
+                      "Register",
                       style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 2.1 * SizeConfig.textMultiplier,
