@@ -6,6 +6,7 @@ import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/add_profile.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/custom_widgets/app_bars.dart';
+import 'package:topup/utils/custom_widgets/snack_bar.dart';
 import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
@@ -305,33 +306,19 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                         onTap: () {
                           if (_questionSelected1 == null) {
                             Scaffold.of(currentContext).showSnackBar(
-                              new SnackBar(
-                                backgroundColor: Colors.lightGreen,
-                                content: new Text('Please select 1st question'),
-                              ),
+                              CustomSnackBar("Please select 1st question") ,
                             );
                           } else if (_questionSelected2 == null) {
                             Scaffold.of(currentContext).showSnackBar(
-                              new SnackBar(
-                                backgroundColor: Colors.lightGreen,
-                                content: new Text('Please select 2nd Question'),
-                              ),
+                              CustomSnackBar("Please select 2nd question"),
                             );
                           } else if (_questionSelected2 == _questionSelected1) {
                             Scaffold.of(currentContext).showSnackBar(
-                              new SnackBar(
-                                backgroundColor: Colors.lightGreen,
-                                content: new Text(
-                                    'Please select Different Questions'),
-                              ),
+                              CustomSnackBar("Please select Different Questions"),
                             );
                           } else if (_questionSelected2 == _questionSelected1) {
                             Scaffold.of(currentContext).showSnackBar(
-                              new SnackBar(
-                                backgroundColor: Colors.lightGreen,
-                                content: new Text(
-                                    'Please select Different Questions'),
-                              ),
+                              CustomSnackBar("Please select Different Questions"),
                             );
                           } else {
                             if (_text1.text == '') {
@@ -392,4 +379,5 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
       ),
     );
   }
+
 }

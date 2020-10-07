@@ -84,6 +84,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   void updateUser(String userId) async {
     widget.user.id = userId;
     print('we are at update user ');
+    if (widget.register) await databaseService.setUserData(widget.user);
     goToNextScreen();
   }
 
@@ -232,8 +233,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                 MaterialPageRoute(
                                     builder: (context) => SecurityQuestions()));
                             setState(() {
-                              _auth.verifyPhone(widget.user.phoneNumber,
-                                  smsUIUpdate, updateUser);
+                              _auth.verifyPhone(widget.user.phoneNumber, smsUIUpdate, updateUser);
                             });
                           },
                           shape: RoundedRectangleBorder(
@@ -271,9 +271,9 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               NumericPad(
                 onNumberSelected: (value) async {
                   if (_error)
-                    setState(() {
-                      _error = false;
-                    });
+                  setState(() {
+                  _error = false;
+                  });
 
                   setState(() {
                     if (value != -1) {
@@ -286,7 +286,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   });
                   if (_code.length == 6) {
                     setState(() {
-                      _phone_verified = false;
+                    _phone_verified = false;
                     });
                     setLoading();
                   }

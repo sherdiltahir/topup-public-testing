@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:topup/ModelClasses/CouponsModel.dart';
 import 'package:topup/screens/dashboard/barcode.dart';
 import 'package:topup/screens/dashboard/coupon.dart';
@@ -8,6 +9,8 @@ import 'package:topup/screens/dashboard/loyalty_points.dart';
 import 'package:topup/screens/dashboard/settings.dart';
 import 'package:topup/utils/color.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:topup/utils/icons.dart';
+import 'package:topup/utils/size_config.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -82,14 +85,11 @@ class _DashboardState extends State<Dashboard> {
             snakeColor: Colors.white,
             selectedItemColor: darkGreyColor,
             items: [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.language), title: Text("")),
-              BottomNavigationBarItem(icon: Icon(Icons.flag), title: Text("")),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.camera), title: Text("")),
-              BottomNavigationBarItem(icon: Icon(Icons.phone), title: Text("")),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), title: Text("")),
+              BarItem(home_Icon,3.0),
+              BarItem(coupon_Icon,3.0),
+              BarItem(qrCode_Icon,4.0),
+              BarItem(coin_Icon,3.0),
+              BarItem(settings_Icon,3.0),
             ],
 
           ),
@@ -97,4 +97,10 @@ class _DashboardState extends State<Dashboard> {
       ),
     );
   }
+
+  BottomNavigationBarItem BarItem(String Icon , double size){
+    return BottomNavigationBarItem(
+        icon: SvgPicture.asset(Icon,height: size*SizeConfig.heightMultiplier,width: size*SizeConfig.widthMultiplier), title: Text(""));
+  }
+
 }

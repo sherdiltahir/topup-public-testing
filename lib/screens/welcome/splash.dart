@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:topup/Services/FirebaseAuthService.dart';
 import 'package:topup/screens/dashboard/dashboard.dart';
+import 'package:topup/screens/login/login.dart';
 import 'package:topup/screens/registration/register.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/size_config.dart';
@@ -18,7 +19,7 @@ class _SplashState extends State<Splash> {
   void moveToSignIn() {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(
-        builder:(context)=>Dashboard()));
+        builder:(context)=>Login()));
   }
   void MoveToOnboarding() {
     Navigator.pop(context);
