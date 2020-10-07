@@ -115,195 +115,197 @@ class _VerifyPhoneState extends State<VerifyPhone> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: appBar_withTitle(context, "Mobile Number Verification"),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.symmetric(
-              vertical: 2 * SizeConfig.heightMultiplier,
-              horizontal: 4.5 * SizeConfig.widthMultiplier),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  Strings.verification_code_String,
-                  style: GoogleFonts.poppins(
-                      color: darkGreyColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 2.2 * SizeConfig.textMultiplier),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: appBar_withTitle(context, "Mobile Number Verification"),
+        body: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.symmetric(
+                vertical: 2 * SizeConfig.heightMultiplier,
+                horizontal: 4.5 * SizeConfig.widthMultiplier),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    Strings.verification_code_String,
+                    style: GoogleFonts.poppins(
+                        color: darkGreyColor,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 2.2 * SizeConfig.textMultiplier),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 1 * SizeConfig.heightMultiplier,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  Strings.verification_code_digit_String,
-                  style: GoogleFonts.poppins(
-                      color: darkGreyColor,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 1.45 * SizeConfig.textMultiplier),
+                SizedBox(
+                  height: 1 * SizeConfig.heightMultiplier,
                 ),
-              ),
-              SizedBox(
-                height: 6 * SizeConfig.heightMultiplier,
-              ),
-              Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    buildCodeNumberBox(
-                        _code.length > 0 ? _code.substring(0, 1) : ""),
-                    buildCodeNumberBox(
-                        _code.length > 1 ? _code.substring(1, 2) : ""),
-                    buildCodeNumberBox(
-                        _code.length > 2 ? _code.substring(2, 3) : ""),
-                    buildCodeNumberBox(
-                        _code.length > 3 ? _code.substring(3, 4) : ""),
-                    buildCodeNumberBox(
-                        _code.length > 4 ? _code.substring(4, 5) : ""),
-                    buildCodeNumberBox(
-                        _code.length > 5 ? _code.substring(5, 6) : ""),
-                  ],
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    Strings.verification_code_digit_String,
+                    style: GoogleFonts.poppins(
+                        color: darkGreyColor,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 1.45 * SizeConfig.textMultiplier),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 3 * SizeConfig.heightMultiplier,
-              ),
-              _error == false
-                  ? SizedBox(
-                      height: 3 * SizeConfig.heightMultiplier,
-                    )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Incorrect code",
-                            style: GoogleFonts.poppins(
-                                color: errorColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 1.7 * SizeConfig.textMultiplier),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2 * SizeConfig.heightMultiplier,
-                        )
-                      ],
-                    ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: timer == true
-                    ? Row(
+                SizedBox(
+                  height: 6 * SizeConfig.heightMultiplier,
+                ),
+                Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      buildCodeNumberBox(
+                          _code.length > 0 ? _code.substring(0, 1) : ""),
+                      buildCodeNumberBox(
+                          _code.length > 1 ? _code.substring(1, 2) : ""),
+                      buildCodeNumberBox(
+                          _code.length > 2 ? _code.substring(2, 3) : ""),
+                      buildCodeNumberBox(
+                          _code.length > 3 ? _code.substring(3, 4) : ""),
+                      buildCodeNumberBox(
+                          _code.length > 4 ? _code.substring(4, 5) : ""),
+                      buildCodeNumberBox(
+                          _code.length > 5 ? _code.substring(5, 6) : ""),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 3 * SizeConfig.heightMultiplier,
+                ),
+                _error == false
+                    ? SizedBox(
+                        height: 3 * SizeConfig.heightMultiplier,
+                      )
+                    : Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            Strings.request_new_code_String,
-                            style: GoogleFonts.poppins(
-                                color: darkGreyColor,
-                                fontWeight: FontWeight.w300,
-                                fontSize: 1.45 * SizeConfig.textMultiplier),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Incorrect code",
+                              style: GoogleFonts.poppins(
+                                  color: errorColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 1.7 * SizeConfig.textMultiplier),
+                            ),
                           ),
-                          Text(
-                            "$_start sec",
-                            style: GoogleFonts.poppins(
-                                color: darkGreyColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 1.7 * SizeConfig.textMultiplier),
+                          SizedBox(
+                            height: 2 * SizeConfig.heightMultiplier,
                           )
                         ],
-                      )
-                    : Align(
-                        alignment: Alignment.center,
-                        child: MaterialButton(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 1.5 * SizeConfig.heightMultiplier,
-                              horizontal: 30 * SizeConfig.widthMultiplier),
-                          color: themeColor,
-                          elevation: 4.0,
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecurityQuestions()));
-                            setState(() {
-                              _auth.verifyPhone(widget.user.phoneNumber, smsUIUpdate, updateUser);
-                            });
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0))),
-                          child: Text(
-                            "Resend code",
-                            style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 2.1 * SizeConfig.textMultiplier,
-                                fontWeight: FontWeight.bold),
+                      ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: timer == true
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              Strings.request_new_code_String,
+                              style: GoogleFonts.poppins(
+                                  color: darkGreyColor,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 1.45 * SizeConfig.textMultiplier),
+                            ),
+                            Text(
+                              "$_start sec",
+                              style: GoogleFonts.poppins(
+                                  color: darkGreyColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 1.7 * SizeConfig.textMultiplier),
+                            )
+                          ],
+                        )
+                      : Align(
+                          alignment: Alignment.center,
+                          child: MaterialButton(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 1.5 * SizeConfig.heightMultiplier,
+                                horizontal: 30 * SizeConfig.widthMultiplier),
+                            color: themeColor,
+                            elevation: 4.0,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SecurityQuestions()));
+                              setState(() {
+                                _auth.verifyPhone(widget.user.phoneNumber, smsUIUpdate, updateUser);
+                              });
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0))),
+                            child: Text(
+                              "Resend code",
+                              style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 2.1 * SizeConfig.textMultiplier,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                      ),
-              ),
-              SizedBox(
-                height: 2.5 * SizeConfig.heightMultiplier,
-              ),
-              // Align(
-              //   alignment: Alignment.center,
-              //   child: GestureDetector(
-              //     onTap: () {
-              //       Navigator.push(context,
-              //           MaterialPageRoute(builder: (context) => ReEnterPin()));
-              //     },
-              //     child: Text(
-              //       Strings.need_help_String,
-              //       style: GoogleFonts.poppins(
-              //           color: blueColor,
-              //           fontWeight: FontWeight.bold,
-              //           fontSize: 2.2 * SizeConfig.textMultiplier),
-              //     ),
-              //   ),
-              // ),
-              NumericPad(
-                onNumberSelected: (value) async {
-                  print(value);
-                  setState(() async {
-                    _error = false;
+                ),
+                SizedBox(
+                  height: 2.5 * SizeConfig.heightMultiplier,
+                ),
+                // Align(
+                //   alignment: Alignment.center,
+                //   child: GestureDetector(
+                //     onTap: () {
+                //       Navigator.push(context,
+                //           MaterialPageRoute(builder: (context) => ReEnterPin()));
+                //     },
+                //     child: Text(
+                //       Strings.need_help_String,
+                //       style: GoogleFonts.poppins(
+                //           color: blueColor,
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 2.2 * SizeConfig.textMultiplier),
+                //     ),
+                //   ),
+                // ),
+                NumericPad(
+                  onNumberSelected: (value) async {
+                    print(value);
+                    setState(() async {
+                      _error = false;
 
-                    if (value != -1) {
-                      if (_code.length < 6) {
-                        _code = _code + value.toString();
+                      if (value != -1) {
+                        if (_code.length < 6) {
+                          _code = _code + value.toString();
+                        }
+                      } else {
+                        _code = _code.substring(0, _code.length - 1);
                       }
-                    } else {
-                      _code = _code.substring(0, _code.length - 1);
-                    }
-                    if (_code.length == 6) {
-                      _phone_verified = false;
-                      if (!await _auth.signInWithPhoneNumber(
-                          null, _code, updateUser)) {
-                        _error = true;
+                      if (_code.length == 6) {
+                        _phone_verified = false;
+                        if (!await _auth.signInWithPhoneNumber(
+                            null, _code, updateUser)) {
+                          _error = true;
+                        }
                       }
-                    }
-                    _phone_verified = true;
-                  });
-                },
-              ),
-              SizedBox(
-                height: 3 * SizeConfig.heightMultiplier,
-              ),
-              _phone_verified == false
-                  ? CircularProgressIndicator(
-                      // value: _progress,
-                      valueColor: AlwaysStoppedAnimation<Color>(themeColor),
-                    )
-                  : SizedBox(
-                      height: 1 * SizeConfig.heightMultiplier,
-                    ),
-            ],
+                      _phone_verified = true;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 3 * SizeConfig.heightMultiplier,
+                ),
+                _phone_verified == false
+                    ? CircularProgressIndicator(
+                        // value: _progress,
+                        valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                      )
+                    : SizedBox(
+                        height: 1 * SizeConfig.heightMultiplier,
+                      ),
+              ],
+            ),
           ),
         ),
       ),

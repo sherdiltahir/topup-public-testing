@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:topup/ModelClasses/CouponsModel.dart';
 import 'package:topup/screens/dashboard/barcode.dart';
 import 'package:topup/screens/dashboard/coupon.dart';
@@ -8,6 +9,8 @@ import 'package:topup/screens/dashboard/loyalty_points.dart';
 import 'package:topup/screens/dashboard/settings.dart';
 import 'package:topup/utils/color.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:topup/utils/icons.dart';
+import 'package:topup/utils/size_config.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -83,13 +86,16 @@ class _DashboardState extends State<Dashboard> {
             selectedItemColor: darkGreyColor,
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.language), title: Text("")),
-              BottomNavigationBarItem(icon: Icon(Icons.flag), title: Text("")),
+                  icon: SvgPicture.asset(home_Icon,height: 2.5*SizeConfig.heightMultiplier,width: 2.5*SizeConfig.widthMultiplier), title: Text("")),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.camera), title: Text("")),
-              BottomNavigationBarItem(icon: Icon(Icons.phone), title: Text("")),
+                  icon: SvgPicture.asset(coupon_Icon,height: 2.5*SizeConfig.heightMultiplier,width: 2.5*SizeConfig.widthMultiplier), title: Text("")),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), title: Text("")),
+                  icon: SvgPicture.asset(qrCode_Icon,height: 4.0*SizeConfig.heightMultiplier,width: 4.0*SizeConfig.widthMultiplier), title: Text("")),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(coin_Icon,height: 2.5*SizeConfig.heightMultiplier,width: 2.5*SizeConfig.widthMultiplier), title: Text("")),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(settings_Icon,height: 2.5*SizeConfig.heightMultiplier,width: 2.5*SizeConfig.widthMultiplier), title: Text("")),
+
             ],
 
           ),
