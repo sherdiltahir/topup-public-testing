@@ -83,8 +83,6 @@ class _VerifyPhoneState extends State<VerifyPhone> {
 
   void updateUser(String userId) async {
     widget.user.id = userId;
-    print('we are at update user ');
-    if (widget.register) await databaseService.setUserData(widget.user);
     goToNextScreen();
   }
 
@@ -103,7 +101,6 @@ class _VerifyPhoneState extends State<VerifyPhone> {
         goToCreatePinScreen();
         await databaseService.setUserData(widget.user);
       } else {
-        print('We are clear to sign in Hello world');
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
       }

@@ -19,7 +19,7 @@ class _SplashState extends State<Splash> {
   void moveToSignIn() {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(
-        builder:(context)=>Login()));
+        builder:(context)=>Dashboard()));
   }
   void MoveToOnboarding() {
     Navigator.pop(context);

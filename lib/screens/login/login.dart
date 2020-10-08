@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:topup/screens/dashboard/dashboard.dart';
+import 'package:topup/screens/registration/phone_verify.dart';
 import 'package:topup/screens/registration/register.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/custom_widgets/app_bars.dart';
@@ -105,7 +105,7 @@ class _LoginState extends State<Login> {
                                     color: darkGreyColor,
                                     fontSize: 2.0 * SizeConfig.textMultiplier),
                                 validator: (String phone_number){
-                                  if(phone_number!=10)
+                                  if(phone_number.length!=10)
                                     return 'Enter a valid phone number';
                                   else
                                     return null;
@@ -133,9 +133,17 @@ class _LoginState extends State<Login> {
                     color: themeColor,
                     elevation: 4.0,
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder:(context)=>Dashboard()//VerifyPhone(user: currentUser,register: false)
-                      ));
+                      if(_formKey.currentState.validate()){
+                        _formKey.currentState.save();
+                        Navigator.push(context, MaterialPageRoute(
+                            builder:(context)=>VerifyPhone(user: currentUser,register: false)
+                        ));
+
+                      }else{
+                        setState(() {
+                          _autoValidate = true;
+                        });
+                      }
 
                       // if(_formKey.currentState.validate()){
                       //   _formKey.currentState.save();

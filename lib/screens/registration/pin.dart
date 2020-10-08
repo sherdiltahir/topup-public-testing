@@ -6,8 +6,6 @@ import 'package:topup/screens/registration/re_enter_pin.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/custom_widgets/app_bars.dart';
 import 'package:topup/utils/custom_widgets/numeric_pad.dart';
-import 'package:topup/utils/custom_widgets/pin_circles.dart';
-import 'package:topup/utils/images.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
