@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:topup/screens/dashboard/dashboard.dart';
+import 'package:topup/screens/profile/edit_profile.dart';
 import 'package:topup/screens/profile/my_profile.dart';
 import 'package:topup/screens/registration/register.dart';
 import 'package:topup/screens/settings/help_and_support.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
                   canvasColor: Colors.transparent,
                   primaryColor: appThemeColor
               ),
-              home: MyProfile(),
+              home: Edit_Profile(),
             );
           },
         );

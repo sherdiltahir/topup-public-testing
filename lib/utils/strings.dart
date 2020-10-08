@@ -20,6 +20,7 @@ mobile phone''';
   static const String security_questions_String = "Security Questions";
   static const String security_questions_details_String = "Security questions required in changing pin";
   static const String add_profile_String = "Add your profile details";
+  static const String edit_profile_String = "Add your profile";
   static const String add_photo_String = "Tap to add photo";
   static const String add_card_String = "Add your Credit/Debit Card";
   static const String add_card_details_String = "Using Credit/Debit card for fuel payment";

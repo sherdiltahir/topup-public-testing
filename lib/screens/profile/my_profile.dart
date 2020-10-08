@@ -191,7 +191,7 @@ class _MyProfileState extends State<MyProfile> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(item.icon,height: 12*SizeConfig.heightMultiplier,width: 12*SizeConfig.widthMultiplier,),
+          SvgPicture.asset(item.icon,height: 10.5*SizeConfig.heightMultiplier,width: 10.5*SizeConfig.widthMultiplier,),
           SizedBox(height: 0.5*SizeConfig.heightMultiplier,),
           Text(
             item.title,
