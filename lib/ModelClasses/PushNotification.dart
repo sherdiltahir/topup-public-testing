@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FuelTransaction{
+class PushNotification{
   String id='';
   String timeStampField= '';
   String text='';
@@ -18,7 +18,7 @@ class FuelTransaction{
 
     };
   }
-  FuelTransaction(
+  PushNotification(
       {this.id,
         this.timeStampField,
         this.text,

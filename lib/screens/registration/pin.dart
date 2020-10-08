@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/re_enter_pin.dart';
 import 'package:topup/utils/color.dart';
@@ -10,9 +11,7 @@ import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class CreatePin extends StatefulWidget {
-  final User user;
-
-  const CreatePin({Key key, this.user}) : super(key: key);
+  
   @override
   _CreatePinState createState() => _CreatePinState();
 }
@@ -20,10 +19,12 @@ class CreatePin extends StatefulWidget {
 class _CreatePinState extends State<CreatePin> {
 
   String pin= "";
+  User user;
   // String error='';
 
   @override
   Widget build(BuildContext context) {
+    user=Provider.of<User>(context,listen: false);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar_withNoTitle(context),
@@ -92,9 +93,9 @@ class _CreatePinState extends State<CreatePin> {
                   }
                   print(pin);
                   if (pin.length==6){
-                    widget.user.securityPin=pin;
+                    user.securityPin=pin;
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ReEnterPin(user:widget.user)));
+                        MaterialPageRoute(builder: (context) => ReEnterPin()));
                   }
                 });
               },
@@ -119,9 +120,9 @@ class _CreatePinState extends State<CreatePin> {
             //           error='Please enter complete digits';
             //         });
             //       else{
-            //         widget.user.securityPin=pin;
+            //         user.securityPin=pin;
             //         Navigator.push(context,
-            //             MaterialPageRoute(builder: (context) => ReEnterPin(user:widget.user)));
+            //             MaterialPageRoute(builder: (context) => ReEnterPin(user:user)));
             //       }
             //     });
             //   },

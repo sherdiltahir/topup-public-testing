@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:topup/ModelClasses/CouponsModel.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/dashboard/barcode.dart';
 import 'package:topup/screens/dashboard/coupon.dart';
 import 'package:topup/screens/dashboard/home.dart';
@@ -20,6 +22,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   PageController _controller = new PageController();
   int _currentIndex = 0;
+  User user;
 
   void _pageChange(int index) {
     setState(() {
@@ -37,6 +40,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    user=Provider.of<User>(context,listen: false);
     SnakeShape customSnakeShape = SnakeShape(
         shape: BeveledRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(12))),

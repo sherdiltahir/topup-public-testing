@@ -1,24 +1,23 @@
+
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:topup/screens/dashboard/dashboard.dart';
-import 'package:topup/screens/profile/edit_profile.dart';
-import 'package:topup/screens/profile/my_profile.dart';
-import 'package:topup/screens/registration/register.dart';
-import 'package:topup/screens/settings/help_and_support.dart';
+import 'package:provider/provider.dart';
 import 'package:topup/screens/welcome/splash.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/size_config.dart';
 
+import 'ModelClasses/UserModel.dart';
+
 
 void main() {
   runApp(
- // MyApp()
-      DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context)=>MyApp(),
-      ),
-       );
+    // MyApp()
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context)=>MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -30,15 +29,17 @@ class MyApp extends StatelessWidget {
         return OrientationBuilder(
           builder: (context, orientation) {
             SizeConfig().init(constraints, orientation);
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'TopUp',
-              //theme: AppTheme.lightTheme,
-              theme: ThemeData(
-                  canvasColor: Colors.transparent,
-                  primaryColor: appThemeColor
+            return ChangeNotifierProvider(create: (BuildContext context) =>User(),
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'TopUp',
+                //theme: AppTheme.lightTheme,
+                theme: ThemeData(
+                    canvasColor: Colors.transparent,
+                    primaryColor: appThemeColor
+                ),
+                home: Splash(),
               ),
-              home: Edit_Profile(),
             );
           },
         );

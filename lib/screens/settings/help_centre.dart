@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:topup/screens/dashboard/dashboard.dart';
+import 'package:topup/screens/profile/my_profile.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';

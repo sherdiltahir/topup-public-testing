@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
+import 'package:topup/Services/FirebaseDatabaseService.dart';
+import 'package:topup/Services/FirebaseStorageService.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/custom_widgets/app_bars.dart';
 import 'package:topup/utils/size_config.dart';
@@ -16,13 +20,14 @@ class Edit_Profile extends StatefulWidget {
 }
 
 class _Edit_ProfileState extends State<Edit_Profile> {
-
+  User user;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _text = TextEditingController();
 
   File _image;
-
   bool _loading = false;
+
+
 
   Future<void> getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -30,8 +35,21 @@ class _Edit_ProfileState extends State<Edit_Profile> {
       _image = image;
     });
   }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+
+      _text.text=user.name;
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
+    user=Provider.of<User>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
           statusBarColor: Colors.white,
@@ -69,7 +87,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                           child: _image==null?GestureDetector(
                             onTap: getImage,
                             child: CircularProfileAvatar(
-                              "https://i.pravatar.cc/300",
+                              user.pictureUri,
                               borderWidth: 6.0,
                               radius: 70.0,
                               backgroundColor: themeColor,
@@ -106,7 +124,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                                 color: darkGreyColor,
                                 fontSize: 2.0 * SizeConfig.textMultiplier),
                             validator: (String name) {
-                              if (name == null)
+                              if (name == "")
                                 return 'Enter your name';
                               else
                                 return null;
@@ -128,13 +146,43 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         SizedBox(
                           height: 20 * SizeConfig.heightMultiplier,
                         ),
-                        MaterialButton(
+                        _loading?CircularProgressIndicator(
+                          // value: _progress,
+                          valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                        ):MaterialButton(
                           padding: EdgeInsets.symmetric(
                               vertical: 1.2 * SizeConfig.heightMultiplier,
                               horizontal: 30 * SizeConfig.widthMultiplier),
                           color: themeColor,
                           elevation: 4.0,
-                          onPressed: () {
+                          onPressed: () async {
+                            if(_formKey.currentState.validate()){
+                              setState(() {
+                                _loading=true;
+                              });
+                              _formKey.currentState.save();
+                              String pictureUri='';
+                              if(_image!=null && _text.text!= user.name) {
+                                pictureUri = await StorageService()
+                                    .uploadUserProfile(
+                                    _image, "User Profile", user.id);
+                                user.updateNameAndPicture(_text.text,pictureUri);
+                              }
+                              else if (_image!=null){
+                                pictureUri = await StorageService()
+                                    .uploadUserProfile(
+                                    _image, "User Profile", user.id);
+                                user.updatePicture(pictureUri);
+                                }
+                              else{
+                                user.updateName(_text.text);
+                              }
+                              await DatabaseService().setUserData(
+                                  user);
+                              setState(() {
+                                _loading=false;
+                              });
+                            }
                           },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(12.0))),

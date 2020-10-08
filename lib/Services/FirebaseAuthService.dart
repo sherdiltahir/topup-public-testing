@@ -7,7 +7,7 @@ class AuthService {
 
   // create user obj based on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(id: user.uid) : null;
+    return user != null ? User.fromData(user.uid) : null;
   }
 
   Future<String> currentUserIdFromAuth() async {

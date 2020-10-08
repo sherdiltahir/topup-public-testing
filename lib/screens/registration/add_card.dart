@@ -3,9 +3,11 @@ import 'package:credit_card_input_form/credit_card_input_form.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:topup/ModelClasses/CardModel.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/Services/FirebaseDatabaseService.dart';
+import 'package:topup/screens/dashboard/dashboard.dart';
 import 'package:topup/screens/registration/add_profile.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/custom_widgets/app_bars.dart';
@@ -15,14 +17,14 @@ import 'package:topup/utils/strings.dart';
 import 'package:uuid/uuid.dart';
 
 class Add_Card extends StatefulWidget {
-  final User user;
-
-  const Add_Card({Key key, this.user}) : super(key: key);
   @override
   _Add_CardState createState() => _Add_CardState();
 }
 
 class _Add_CardState extends State<Add_Card> {
+  User user;
+
+
   final Map<String, String> customCaptions = {
     'PREV': 'Prev',
     'NEXT': 'Next',
@@ -68,6 +70,7 @@ class _Add_CardState extends State<Add_Card> {
 
   @override
   Widget build(BuildContext context) {
+    user=Provider.of<User>(context,listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -119,11 +122,11 @@ class _Add_CardState extends State<Add_Card> {
                     if(currentState.index==4&&cardInfo.cvv!=""&&cardInfo.cardNumber!=''&&cardInfo.name!=''&&cardInfo.cvv!=''){
                       BankCard card=BankCard(cardNumber: cardInfo.cardNumber,cardName: cardInfo.name,
                           cardKey: cardInfo.cvv,cardId: Uuid().v4(),cardExpiry: cardInfo.validate);
-                      if(widget.user.cards==null)
-                        widget.user.cards=new List();
-                      widget.user.cards.add(card);
-                      DatabaseService().setUserData(widget.user);
-                    //  TODO: Move User to Dashboard Screen
+                      if(user.cards==null)
+                        user.cards=new List();
+                      user.cards.add(card);
+                      DatabaseService().setUserData(user);
+                      moveToDashboard();
                     }
                   },
                   customCaptions: customCaptions,
@@ -144,7 +147,7 @@ class _Add_CardState extends State<Add_Card> {
             Center(
               child: GestureDetector(
                 onTap: () {
-                  //  TODO: Move User to Dashboard Screen
+                  moveToDashboard();
                 },
                 child: Text(
                   'Skip',
@@ -159,6 +162,16 @@ class _Add_CardState extends State<Add_Card> {
           ]),
         ),
       ),
+    );
+  }
+
+  void moveToDashboard() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => Dashboard(),
+      ),
+          (route) => false,
     );
   }
 }

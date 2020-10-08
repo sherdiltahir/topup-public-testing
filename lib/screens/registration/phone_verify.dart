@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/Services/FirebaseAuthService.dart';
 import 'package:topup/Services/FirebaseDatabaseService.dart';
@@ -18,10 +19,7 @@ import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class VerifyPhone extends StatefulWidget {
-  final User user;
-  final bool register;
-
-  VerifyPhone({@required this.user, @required this.register});
+  VerifyPhone();
 
   @override
   _VerifyPhoneState createState() => _VerifyPhoneState();
@@ -30,12 +28,16 @@ class VerifyPhone extends StatefulWidget {
 class _VerifyPhoneState extends State<VerifyPhone> {
   AuthService _auth = new AuthService();
   DatabaseService databaseService = new DatabaseService();
+  User user;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _auth.verifyPhone(widget.user.phoneNumber, smsUIUpdate, updateUser);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      user = Provider.of<User>(context, listen: false);
+      _auth.verifyPhone(user.phoneNumber, smsUIUpdate, updateUser);
+    });
     //startTimer();
   }
 
@@ -82,25 +84,30 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   }
 
   void updateUser(String userId) async {
-    widget.user.id = userId;
+    user.id = userId;
     goToNextScreen();
   }
 
   void goToCreatePinScreen() {
     print('We are clear to sign up Hello world');
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => CreatePin(user: widget.user)));
+        MaterialPageRoute(builder: (context) => CreatePin()));
   }
 
   void goToNextScreen() {
+    setState(() {
+      timer = false;
+      _timer.cancel();
+    });
     StreamSubscription subscription;
     subscription =
-        databaseService.getCurrentUserData(widget.user).listen((event) async {
+        databaseService.getCurrentUserData(user).listen((event) async {
       subscription.cancel();
       if (event == null) {
+        await databaseService.setUserData(user);
         goToCreatePinScreen();
-        await databaseService.setUserData(widget.user);
       } else {
+        user.fromUser(event);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
       }
@@ -225,12 +232,12 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                           color: themeColor,
                           elevation: 4.0,
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SecurityQuestions()));
+                            // Navigator.push(
+                            //     context,
+                                // MaterialPageRoute(
+                                //     builder: (context) => SecurityQuestions()));
                             setState(() {
-                              _auth.verifyPhone(widget.user.phoneNumber, smsUIUpdate, updateUser);
+                              _auth.verifyPhone(user.phoneNumber, smsUIUpdate, updateUser);
                             });
                           },
                           shape: RoundedRectangleBorder(
@@ -346,6 +353,11 @@ class _VerifyPhoneState extends State<VerifyPhone> {
     if (!await _auth.signInWithPhoneNumber(null, _code, updateUser)) {
       setState(() {
         _error = true;
+      });
+    }
+    else{
+      setState(() {
+        _phone_verified = true;
       });
     }
   }

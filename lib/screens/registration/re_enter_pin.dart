@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/pin.dart';
 import 'package:topup/screens/registration/security_questions.dart';
@@ -12,9 +13,7 @@ import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class ReEnterPin extends StatefulWidget {
-  final User user;
-
-  const ReEnterPin({Key key, this.user}) : super(key: key);
+  
   @override
   _ReEnterPinState createState() => _ReEnterPinState();
 }
@@ -22,9 +21,11 @@ class ReEnterPin extends StatefulWidget {
 class _ReEnterPinState extends State<ReEnterPin> {
   String pin= "";
   String error='';
+  User user;
 
   @override
   Widget build(BuildContext context) {
+    user=Provider.of<User>(context,listen: false);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar_withNoTitle(context),
@@ -94,12 +95,12 @@ class _ReEnterPinState extends State<ReEnterPin> {
                   }
                   print(pin);
                   if(pin.length==6)
-                    if(pin!=widget.user.securityPin)
+                    if(pin!=user.securityPin)
                       error='The pins Do not match';
                     else{
-                      widget.user.securityPin=pin;
+                      user.securityPin=pin;
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => SecurityQuestions(user:widget.user)));
+                          MaterialPageRoute(builder: (context) => SecurityQuestions()));
                     }
                 });
               },
@@ -123,12 +124,12 @@ class _ReEnterPinState extends State<ReEnterPin> {
             //         setState(() {
             //           error='Please enter complete digits';
             //         });
-            //       else if(pin!=widget.user.securityPin)
+            //       else if(pin!=user.securityPin)
             //         error='The pins Do not match';
             //       else{
-            //         widget.user.securityPin=pin;
+            //         user.securityPin=pin;
             //         // Navigator.push(context,
-            //         //     MaterialPageRoute(builder: (context) => ReEnterPin(user:widget.user)));
+            //         //     MaterialPageRoute(builder: (context) => ReEnterPin(user:user)));
             //       }
             //     });
             //   },

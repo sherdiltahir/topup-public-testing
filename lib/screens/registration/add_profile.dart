@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/Services/FirebaseDatabaseService.dart';
 import 'package:topup/Services/FirebaseStorageService.dart';
@@ -16,9 +17,6 @@ import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class AddProfile extends StatefulWidget {
-  final User user;
-
-  const AddProfile({Key key, this.user}) : super(key: key);
 
   @override
   _AddProfileState createState() => _AddProfileState();
@@ -27,6 +25,7 @@ class AddProfile extends StatefulWidget {
 class _AddProfileState extends State<AddProfile> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  User user;
 
   final _text = TextEditingController();
 
@@ -45,6 +44,7 @@ class _AddProfileState extends State<AddProfile> {
 
   @override
   Widget build(BuildContext context) {
+    user=Provider.of<User>(context,listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -151,7 +151,7 @@ class _AddProfileState extends State<AddProfile> {
                               color: darkGreyColor,
                               fontSize: 1.8 * SizeConfig.textMultiplier),
                           validator: (String name) {
-                            if (name == null)
+                            if (name == '')
                               return 'Enter your name';
                             else
                               return null;
@@ -199,20 +199,20 @@ class _AddProfileState extends State<AddProfile> {
                                 setState(() {
                                   _loading = true;
                                 });
-                                widget.user.name = _text.text;
+                                user.name = _text.text;
                                 if (_image != null)
-                                  widget.user.picture = _image;
-                                widget.user.pictureUri = await StorageService()
+                                  user.picture = _image;
+                                user.pictureUri = await StorageService()
                                     .uploadUserProfile(
-                                    _image, "User Profile", widget.user.id);
+                                    _image, "User Profile", user.id);
                                 await DatabaseService().setUserData(
-                                    widget.user);
+                                    user);
                                 setState(() {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              Add_Card(user: widget.user)));
+                                              Add_Card()));
                                   _loading = false;
                                 });
                               }

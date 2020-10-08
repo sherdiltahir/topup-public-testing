@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:topup/screens/registration/add_profile.dart';
 import 'package:topup/utils/color.dart';
@@ -12,9 +13,6 @@ import 'package:topup/utils/size_config.dart';
 import 'package:topup/utils/strings.dart';
 
 class SecurityQuestions extends StatefulWidget {
-  final User user;
-
-  const SecurityQuestions({Key key, this.user}) : super(key: key);
 
   @override
   _SecurityQuestionsState createState() => _SecurityQuestionsState();
@@ -22,11 +20,11 @@ class SecurityQuestions extends StatefulWidget {
 
 class _SecurityQuestionsState extends State<SecurityQuestions> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _autoValidate = false;
   bool _validate1 = false;
   bool _validate2 = false;
   final _text1 = TextEditingController();
   final _text2 = TextEditingController();
+  User user;
 
   int _questionSelected1;
   int _questionSelected2;
@@ -68,6 +66,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
 
   @override
   Widget build(BuildContext context) {
+    user=Provider.of<User>(context,listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -168,7 +167,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                             color: darkGreyColor,
                             fontSize: 1.8 * SizeConfig.textMultiplier),
                         validator: (String name) {
-                          if (name == null)
+                          if (name == '')
                             return 'Enter your 1st answer';
                           else
                             return null;
@@ -240,7 +239,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                             color: darkGreyColor,
                             fontSize: 1.8 * SizeConfig.textMultiplier),
                         validator: (String name) {
-                          if (name == null)
+                          if (name == '')
                             return 'Enter your answer';
                           else
                             return null;
@@ -301,12 +300,12 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                                 _validate2 = false;
                               });
                             }
-                            widget.user.securityQuestion1 =
+                            user.securityQuestion1 =
                                 stringQuestionList[_questionSelected1];
-                            widget.user.securityQuestion2 =
+                            user.securityQuestion2 =
                                 stringQuestionList[_questionSelected2];
-                            widget.user.securityAnswer1 = _text1.text;
-                            widget.user.securityAnswer2 = _text2.text;
+                            user.securityAnswer1 = _text1.text;
+                            user.securityAnswer2 = _text2.text;
                             setState(() {
                               _validate1 = false;
                               _validate2 = false;
@@ -315,7 +314,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        AddProfile(user: widget.user)));
+                                        AddProfile()));
                           }
                         },
                         child: Container(

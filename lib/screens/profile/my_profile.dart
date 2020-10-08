@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:topup/screens/settings/help_centre.dart';
+import 'package:provider/provider.dart';
+import 'package:topup/ModelClasses/UserModel.dart';
+import 'package:topup/screens/profile/edit_profile.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/custom_widgets/app_bars.dart';
 import 'package:topup/utils/icons.dart';
@@ -15,13 +17,15 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
-  List<Grid_Item> items = [
-    new Grid_Item(cards_Icon, "My Cards", "2"),
-    new Grid_Item(friends_Icon, "My Friends", "5")
+  List<GridItem> items = [
+    new GridItem(cards_Icon, "My Cards", "2"),
+    new GridItem(friends_Icon, "My Friends", "5")
   ];
+  User user;
 
   @override
   Widget build(BuildContext context) {
+    user=Provider.of<User>(context,listen: false);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
           statusBarColor: themeColor,
@@ -33,7 +37,7 @@ class _MyProfileState extends State<MyProfile> {
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              ProfileCard(),
+              profileCard(),
               SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
@@ -41,8 +45,8 @@ class _MyProfileState extends State<MyProfile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      GridView_Item(items[0]),
-                      GridView_Item(items[1]),
+                      gridViewItem(items[0]),
+                      gridViewItem(items[1]),
 
                     ],
                   ),
@@ -55,7 +59,7 @@ class _MyProfileState extends State<MyProfile> {
     );
   }
 
-  Widget ProfileCard() {
+  Widget profileCard() {
     return Container(
       width: 100 * SizeConfig.widthMultiplier,
       height: 25 * SizeConfig.heightMultiplier,
@@ -100,72 +104,85 @@ class _MyProfileState extends State<MyProfile> {
                         blurRadius: 2.0,
                       ),
                     ]),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProfileAvatar(
-                      "https://i.pravatar.cc/300",
-                      borderWidth: 6.0,
-                      radius: 50.0,
-                      backgroundColor: themeColor,
-                      borderColor: themeColor,
-                      cacheImage: true,
-                      foregroundColor: themeColor.withOpacity(0.5),
-                      elevation: 4.0,
-                    ),
-                    SizedBox(
-                      height: 2 * SizeConfig.heightMultiplier,
-                    ),
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                  left: 10 * SizeConfig.widthMultiplier),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      "John Smith",
-                                      style: GoogleFonts.poppins(
-                                          color: darkGreyColor,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize:
-                                              2.2 * SizeConfig.textMultiplier),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 1 * SizeConfig.heightMultiplier,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      "+7 334445355",
-                                      style: GoogleFonts.poppins(
-                                          color: darkGreyColor,
-                                          fontWeight: FontWeight.normal,
-                                          fontSize:
-                                              2.2 * SizeConfig.textMultiplier),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                child: Consumer<User>(
+                  builder: (context,user,child){
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => Edit_Profile()));
+                          },
+                          child: CircularProfileAvatar(
+                            user.pictureUri,
+                            borderWidth: 6.0,
+                            radius: 50.0,
+                            backgroundColor: themeColor,
+                            borderColor: themeColor,
+                            cacheImage: true,
+                            foregroundColor: themeColor.withOpacity(0.5),
+                            elevation: 4.0,
                           ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              color: darkGreyColor,
-                              size: 5.5 * SizeConfig.imageSizeMultiplier,
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                        ),
+                        SizedBox(
+                          height: 2 * SizeConfig.heightMultiplier,
+                        ),
+                        Center(
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        left: 10 * SizeConfig.widthMultiplier),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Center(
+                                          child: Text(
+                                            user.name,
+                                            style: GoogleFonts.poppins(
+                                                color: darkGreyColor,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize:
+                                                2.2 * SizeConfig.textMultiplier),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 1 * SizeConfig.heightMultiplier,
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            user.phoneNumber,
+                                            style: GoogleFonts.poppins(
+                                                color: darkGreyColor,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize:
+                                                2.2 * SizeConfig.textMultiplier),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: darkGreyColor,
+                                    size: 5.5 * SizeConfig.imageSizeMultiplier,
+                                  ), onPressed: () {
+                                    Navigator.push(
+                                    context, MaterialPageRoute(builder: (context) => Edit_Profile()));
+                                    },
+                                )
+                              ],
+                            )
+                        )
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -175,7 +192,7 @@ class _MyProfileState extends State<MyProfile> {
     );
   }
 
-  Widget GridView_Item(Grid_Item item) {
+  Widget gridViewItem(GridItem item) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10*SizeConfig.widthMultiplier,vertical: 1.5*SizeConfig.heightMultiplier),
       decoration: BoxDecoration(
@@ -216,10 +233,10 @@ class _MyProfileState extends State<MyProfile> {
   }
 }
 
-class Grid_Item {
+class GridItem {
   final String icon;
   final String title;
   final String qty;
 
-  Grid_Item(this.icon, this.title, this.qty);
+  GridItem(this.icon, this.title, this.qty);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:topup/ModelClasses/UserModel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,12 +23,13 @@ class _LoginState extends State<Login> {
   bool _autoValidate = false;
 
   final _text = TextEditingController();
-  User currentUser=new User();
+  User currentUser;
   bool _validate=false;
   String _phone_number = null;
 
   @override
   Widget build(BuildContext context) {
+    currentUser=Provider.of<User>(context,listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -136,7 +138,7 @@ class _LoginState extends State<Login> {
                       if(_formKey.currentState.validate()){
                         _formKey.currentState.save();
                         Navigator.push(context, MaterialPageRoute(
-                            builder:(context)=>VerifyPhone(user: currentUser,register: false)
+                            builder:(context)=>VerifyPhone()
                         ));
 
                       }else{
@@ -187,9 +189,9 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                              builder:(context)=>Register()
-                          ));
+                          // Navigator.push(context, MaterialPageRoute(
+                          //     builder:(context)=>Register()
+                          // ));
                         },
                         child: Text(
                           "Register",
@@ -218,18 +220,6 @@ class _LoginState extends State<Login> {
       return 'Mobile Number must be of 10 digit';
     else
       return null;
-  }
-
-  void _validateInputs() {
-    if (_formKey.currentState.validate()) {
-//    If all data are correct then save data to out variables
-      _formKey.currentState.save();
-    } else {
-//    If all data are not valid then start auto validation.
-      setState(() {
-        _autoValidate = true;
-      });
-    }
   }
 
   void _updatePhone(String value) {
