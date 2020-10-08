@@ -57,45 +57,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
       );
       index++;
     }
-    // questionList.add(
-    //   new DropdownMenuItem(
-    //     value: 0,
-    //     child: new Text(
-    //       'What was the name of your first pet?',
-    //       textAlign: TextAlign.left,
-    //       style: GoogleFonts.poppins(
-    //           color: darkGreyColor,
-    //           fontWeight: FontWeight.w300,
-    //           fontSize: 1.6 * SizeConfig.textMultiplier),
-    //     ),
-    //   ),
-    // );
-    // questionList.add(
-    //   new DropdownMenuItem(
-    //     value: 1,
-    //     child: new Text(
-    //       'What was the name of your first toy?',
-    //       textAlign: TextAlign.left,
-    //       style: GoogleFonts.poppins(
-    //           color: darkGreyColor,
-    //           fontWeight: FontWeight.w300,
-    //           fontSize: 1.6 * SizeConfig.textMultiplier),
-    //     ),
-    //   ),
-    // );
-    // questionList.add(
-    //   new DropdownMenuItem(
-    //     value: 2,
-    //     child: new Text(
-    //       'What was youngest brother name?',
-    //       textAlign: TextAlign.left,
-    //       style: GoogleFonts.poppins(
-    //           color: darkGreyColor,
-    //           fontWeight: FontWeight.w300,
-    //           fontSize: 1.6 * SizeConfig.textMultiplier),
-    //     ),
-    //   ),
-    // );
+
   }
 
   @override

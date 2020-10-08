@@ -8,3 +8,5 @@ var qrCode_Icon = "assets/icons/qr_code.svg";
 var coin_Icon = "assets/icons/coin_white.svg";
 var settings_Icon = "assets/icons/settings.svg";
 var coupon_Icon = "assets/icons/coupon.svg";
+var cards_Icon = "assets/icons/credit_card_1.svg";
+var friends_Icon = "assets/icons/friends.svg";

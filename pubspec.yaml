@@ -48,6 +48,7 @@ dependencies:
   circular_profile_avatar: ^1.0.6
   credit_card_input_form: ^2.0.3
   flutter_snake_navigationbar: ^0.4.0+1
+  expandable: ^4.1.4
 
 
 dev_dependencies:
