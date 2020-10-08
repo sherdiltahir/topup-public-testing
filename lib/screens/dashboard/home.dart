@@ -23,12 +23,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: dashboardAppbar_Home(context, "Home"),
+        appBar: dashboardAppbar_Main(context, "Home"),
         body: SingleChildScrollView(
           child: Column(mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -37,7 +38,7 @@ class _HomeState extends State<Home> {
               decoration: BoxDecoration(
                 color: themeColor,
                 borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(24.0)),
+                    bottomRight: Radius.circular(32.0)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey,
@@ -45,6 +46,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
+
           ]),
         ),
         //extendBodyBehindAppBar: true,

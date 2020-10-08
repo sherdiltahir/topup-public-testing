@@ -86,9 +86,9 @@ class _DashboardState extends State<Dashboard> {
             selectedItemColor: darkGreyColor,
             items: [
               BarItem(home_Icon,3.0),
-              BarItem(coupon_Icon,3.0),
-              BarItem(qrCode_Icon,4.0),
-              BarItem(coin_Icon,3.0),
+              BarItem(coupon_Icon,3.5),
+              BarItem(qrCode_Icon,4.2),
+              BarItem(coin_Icon,3.5),
               BarItem(settings_Icon,3.0),
             ],
 

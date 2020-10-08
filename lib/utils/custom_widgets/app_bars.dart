@@ -99,7 +99,7 @@ Widget appBar_withTitle(BuildContext context, String title) {
   );
 }
 
-AppBar dashboardAppbar_Home(BuildContext context, String title) {
+AppBar dashboardAppbar_Main(BuildContext context, String title) {
   return AppBar(
     title: Text(
       title,
@@ -199,6 +199,37 @@ Widget dashboardAppBar_settings(BuildContext context, String title) {
                   ),
                 )),
           )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget help_Support_Appbar(BuildContext context, String title) {
+  return PreferredSize(
+    preferredSize: AppBar().preferredSize,
+    child: Container(
+      color: themeColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+              size: 4 * SizeConfig.imageSizeMultiplier,
+            ),
+          ),
+          Text(
+            title,
+            style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+                fontSize: 2.2 * SizeConfig.textMultiplier),
+          ),
         ],
       ),
     ),

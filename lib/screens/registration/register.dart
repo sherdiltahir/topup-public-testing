@@ -230,52 +230,35 @@ class _RegisterState extends State<Register> {
                                         fontSize: 1.37 * SizeConfig.textMultiplier,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text:', I agree to TopUp ',
-                                          style: GoogleFonts.poppins(
-                                            color: darkGreyColor,
-                                            fontSize: 1.35 * SizeConfig.textMultiplier,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                              text: 'Terms & Conditions',
-                                              style: GoogleFonts.poppins(
-                                                  color: darkBlueColor,
-                                                fontSize: 1.37 * SizeConfig.textMultiplier,
-                                                fontWeight: FontWeight.w500,
-                                                fontStyle: FontStyle.italic
-                                              ),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                  text:' and ',
-                                                  style: GoogleFonts.poppins(
-                                                    color: darkGreyColor,
-                                                    fontSize: 1.35 * SizeConfig.textMultiplier,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text: 'Privacy Policy',
-                                                      style: GoogleFonts.poppins(
-                                                          color: darkBlueColor,
-                                                          fontSize: 1.37 * SizeConfig.textMultiplier,
-                                                          fontWeight: FontWeight.w500,
-                                                          fontStyle: FontStyle.italic
-                                                      ),
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          )
-                                        ]
+                                  ),
+                                  TextSpan(
+                                      text:' I agree to TopUp ',
+                                      style: GoogleFonts.poppins(
+                                        color: darkGreyColor,
+                                        fontSize: 1.35 * SizeConfig.textMultiplier,
+                                        fontWeight: FontWeight.w400,
                                       )
-
-                                    ],
-
-                                  )
-
+                                  ),
+                                  TextSpan(text: 'Terms & Conditions',
+                                    style: GoogleFonts.poppins(
+                                      color: darkBlueColor,
+                                      fontSize: 1.37 * SizeConfig.textMultiplier,
+                                      fontWeight: FontWeight.w500,
+                                    ),),
+                                  TextSpan(
+                                      text:' and ',
+                                      style: GoogleFonts.poppins(
+                                        color: darkGreyColor,
+                                        fontSize: 1.35 * SizeConfig.textMultiplier,
+                                        fontWeight: FontWeight.w400,
+                                      )
+                                  ),
+                                  TextSpan(text: 'Privacy Policy',
+                                    style: GoogleFonts.poppins(
+                                      color: darkBlueColor,
+                                      fontSize: 1.37 * SizeConfig.textMultiplier,
+                                      fontWeight: FontWeight.w500,
+                                    ),),
                                 ]
 
                               ),
