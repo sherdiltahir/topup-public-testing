@@ -2,6 +2,8 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:topup/screens/dashboard/dashboard.dart';
+import 'package:topup/screens/registration/register.dart';
+import 'package:topup/screens/settings/help_and_support.dart';
 import 'package:topup/screens/welcome/splash.dart';
 import 'package:topup/utils/color.dart';
 import 'package:topup/utils/size_config.dart';
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
                   canvasColor: Colors.transparent,
                   primaryColor: appThemeColor
               ),
-              home: Dashboard(),
+              home: Help_Support(),
             );
           },
         );

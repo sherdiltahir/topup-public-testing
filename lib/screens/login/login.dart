@@ -198,6 +198,9 @@ class _LoginState extends State<Login> {
                               fontWeight: FontWeight.bold,
                               color: darkGreyColor),
                         ),
+                      ),
+                      SizedBox(
+                        height: 3 * SizeConfig.heightMultiplier,
                       )
                     ],
                   ),
