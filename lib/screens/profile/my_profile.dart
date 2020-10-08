@@ -34,6 +34,20 @@ class _MyProfileState extends State<MyProfile> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ProfileCard(),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  margin: EdgeInsets.only(top: 25*SizeConfig.heightMultiplier,bottom: 5*SizeConfig.heightMultiplier),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GridView_Item(items[0]),
+                      GridView_Item(items[1]),
+
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -163,9 +177,10 @@ class _MyProfileState extends State<MyProfile> {
 
   Widget GridView_Item(Grid_Item item) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10*SizeConfig.widthMultiplier,vertical: 1.5*SizeConfig.heightMultiplier),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(8.0)),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey,
@@ -176,22 +191,24 @@ class _MyProfileState extends State<MyProfile> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(item.icon),
+          SvgPicture.asset(item.icon,height: 12*SizeConfig.heightMultiplier,width: 12*SizeConfig.widthMultiplier,),
+          SizedBox(height: 0.5*SizeConfig.heightMultiplier,),
           Text(
             item.title,
             style: GoogleFonts.poppins(
                 color: darkGreyColor,
                 fontWeight: FontWeight.normal,
                 fontSize:
-                1.5 * SizeConfig.textMultiplier),
+                2.0 * SizeConfig.textMultiplier),
           ),
+          SizedBox(height: 0.5*SizeConfig.heightMultiplier,),
           Text(
             item.qty,
             style: GoogleFonts.poppins(
                 color: darkGreyColor,
                 fontWeight: FontWeight.bold,
                 fontSize:
-                2.0 * SizeConfig.textMultiplier),
+                3.0 * SizeConfig.textMultiplier),
           )
         ],
       ),
